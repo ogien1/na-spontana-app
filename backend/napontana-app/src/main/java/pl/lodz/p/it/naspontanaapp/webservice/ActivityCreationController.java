@@ -29,6 +29,6 @@ public class ActivityCreationController {
 		LOGGER.info("test|START - wywolano z parametrami: " );
 //		activityCreationManager.doSth();
 		LOGGER.info("test|STOP - zapisano: ");
-		return "activity test ok";
+		return "activity test2 ok";
 	}
 }
