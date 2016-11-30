@@ -1,10 +1,10 @@
 package pl.lodz.p.it.naspontanaapp.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDateTime;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -29,13 +29,15 @@ public class Activity implements Serializable {
 	@Column(nullable=false, length=50)
 	private String name;
 
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
 	@Column(name="publication_date", nullable=false)
-	private Timestamp publicationDate;
+	private LocalDateTime publicationDate;
 
 	private Boolean published;
 
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
 	@Column(name="start_date", nullable=false)
-	private Timestamp startDate;
+	private LocalDateTime startDate;
 
 	//bi-directional many-to-one association to Category
 	@ManyToOne
@@ -46,11 +48,12 @@ public class Activity implements Serializable {
 	@ManyToMany(mappedBy="activities")
 	private List<User> users;
 
-	public Activity() {
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
 	}
 
 	public Long getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(Long id) {
@@ -58,7 +61,7 @@ public class Activity implements Serializable {
 	}
 
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
 	public void setDescription(String description) {
@@ -66,39 +69,39 @@ public class Activity implements Serializable {
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public Timestamp getPublicationDate() {
-		return this.publicationDate;
+	public LocalDateTime getPublicationDate() {
+		return publicationDate;
 	}
 
-	public void setPublicationDate(Timestamp publicationDate) {
+	public void setPublicationDate(LocalDateTime publicationDate) {
 		this.publicationDate = publicationDate;
 	}
 
 	public Boolean getPublished() {
-		return this.published;
+		return published;
 	}
 
 	public void setPublished(Boolean published) {
 		this.published = published;
 	}
 
-	public Timestamp getStartDate() {
-		return this.startDate;
+	public LocalDateTime getStartDate() {
+		return startDate;
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(LocalDateTime startDate) {
 		this.startDate = startDate;
 	}
 
 	public Category getCategory() {
-		return this.category;
+		return category;
 	}
 
 	public void setCategory(Category category) {
@@ -106,7 +109,7 @@ public class Activity implements Serializable {
 	}
 
 	public List<User> getUsers() {
-		return this.users;
+		return users;
 	}
 
 	public void setUsers(List<User> users) {

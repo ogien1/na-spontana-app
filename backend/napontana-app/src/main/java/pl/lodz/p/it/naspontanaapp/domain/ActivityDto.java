@@ -1,10 +1,8 @@
 package pl.lodz.p.it.naspontanaapp.domain;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 /**
  * Created by piotr on 30.11.16.
@@ -21,7 +19,7 @@ public class ActivityDto {
     private String name;
 
     @NotNull
-    private DateTime startDate;
+    private LocalDateTime startDate;
 
     @NotNull
     private long category;
@@ -50,11 +48,11 @@ public class ActivityDto {
         this.name = name;
     }
 
-    public DateTime getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(DateTime startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 

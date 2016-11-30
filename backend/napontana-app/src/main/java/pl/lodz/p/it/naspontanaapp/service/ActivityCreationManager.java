@@ -1,5 +1,6 @@
 package pl.lodz.p.it.naspontanaapp.service;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.it.naspontanaapp.domain.ActivityDto;
@@ -10,7 +11,6 @@ import pl.lodz.p.it.naspontanaapp.repository.ActivityRepository;
 import pl.lodz.p.it.naspontanaapp.repository.CategoryRepository;
 import pl.lodz.p.it.naspontanaapp.repository.UserRepository;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +38,9 @@ public class ActivityCreationManager {
         Activity activity = new Activity();
         activity.setDescription(activityDto.getDescription());
         activity.setName(activityDto.getName());
-        activity.setStartDate(new Timestamp(activityDto.getStartDate().getMillis()));
+        activity.setStartDate(activityDto.getStartDate());
         activity.setUsers(users);
-        activity.setPublicationDate(new Timestamp(System.currentTimeMillis()));
+        activity.setPublicationDate(LocalDateTime.now());
         activity.setCategory(category);
         activity.setPublished(false);
 
