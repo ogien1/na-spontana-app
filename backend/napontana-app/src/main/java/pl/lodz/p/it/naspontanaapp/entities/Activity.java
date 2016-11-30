@@ -1,11 +1,11 @@
 package pl.lodz.p.it.naspontanaapp.entities;
 
 import org.hibernate.annotations.*;
-import org.hibernate.annotations.CascadeType;
 import org.joda.time.LocalDateTime;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -49,8 +49,7 @@ public class Activity implements Serializable {
 	private Category category;
 
 	//bi-directional many-to-many association to User
-	@Cascade(CascadeType.ALL)
-	@ManyToMany(mappedBy="activities")
+	@ManyToMany(mappedBy="activities", cascade = CascadeType.ALL)
 	private List<User> users;
 
 	public static long getSerialVersionUID() {
