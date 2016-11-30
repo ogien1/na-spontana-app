@@ -1,5 +1,7 @@
 package pl.lodz.p.it.naspontanaapp.webservice;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,12 +17,15 @@ import pl.lodz.p.it.naspontanaapp.service.ActivityDetailsManager;
 // */
 @RestController("/activity")
 public class ActivityDetailsController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ActivityDetailsController.class);
 
     @Autowired
     private ActivityDetailsManager activityDetailsManager;
 
     @RequestMapping(value = "/details/{activityId}",method = RequestMethod.GET)
     public GetActivitiesDto activityDetails(@PathVariable long activityId) {
+		logger.info("activityDetails {}", activityId);
         Activity activity = activityDetailsManager.getActivity(activityId);
         return GetActivitiesDto.fromActivity(activity);
     }
