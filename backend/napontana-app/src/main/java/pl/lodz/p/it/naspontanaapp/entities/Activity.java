@@ -1,10 +1,14 @@
 package pl.lodz.p.it.naspontanaapp.entities;
 
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 import org.joda.time.LocalDateTime;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import java.util.List;
 
 
@@ -45,6 +49,7 @@ public class Activity implements Serializable {
 	private Category category;
 
 	//bi-directional many-to-many association to User
+	@Cascade(CascadeType.ALL)
 	@ManyToMany(mappedBy="activities")
 	private List<User> users;
 
