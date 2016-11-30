@@ -47,4 +47,9 @@ public class ActivityCreationManager {
         activityRepository.save(activity);
     }
 
+    public void addUserToActivity(String facebookId, long activityId) {
+        Activity activity = activityRepository.findOne(activityId);
+        User user = userRepository.findUserByFacebookId(facebookId);
+        activity.getUsers().add(user);
+    }
 }
