@@ -1,5 +1,7 @@
 package pl.lodz.p.it.naspontanaapp.domain;
 
+import org.apache.tomcat.jni.Local;
+import org.joda.time.LocalDateTime;
 import pl.lodz.p.it.naspontanaapp.entities.Activity;
 
 import javax.validation.constraints.NotNull;
@@ -22,16 +24,16 @@ public class GetActivitiesDto {
     private String name;
 
     @NotNull
-    private Timestamp startDate;
+    private LocalDateTime startDate;
 
     @NotNull
     private long category;
 
     public static GetActivitiesDto fromActivity(Activity activity) {
         GetActivitiesDto getActivitiesDto = new GetActivitiesDto();
-        List<String> particpajntsIds = activity.getUsers().stream()
+        List<String> usersIds = activity.getUsers().stream()
                 .map(u -> u.getFacebookId()).collect(Collectors.toList());
-        getActivitiesDto.setParticipantsID(particpajntsIds);
+        getActivitiesDto.setParticipantsID(usersIds);
         getActivitiesDto.setDescription(activity.getDescription());
         getActivitiesDto.setName(activity.getName());
         getActivitiesDto.setStartDate(activity.getStartDate());
@@ -63,11 +65,11 @@ public class GetActivitiesDto {
         this.name = name;
     }
 
-    public Timestamp getStartDate() {
+    public LocalDateTime getStartDate() {
         return this.startDate;
     }
 
-    public void setStartDate(Timestamp startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
