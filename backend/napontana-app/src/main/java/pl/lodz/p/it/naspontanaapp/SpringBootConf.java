@@ -26,8 +26,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableSwagger2
 @EnableAutoConfiguration
 public class SpringBootConf extends SpringBootServletInitializer {
-	
-    
+
+
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(SpringBootConf.class);
@@ -50,18 +50,18 @@ public class SpringBootConf extends SpringBootServletInitializer {
     public Module bindJodaJacksonModule() {
         return new JodaModule();
     }
-    
+
     @Bean
-    public Docket api() { 
-        return new Docket(DocumentationType.SWAGGER_2)  
-          .select()                                  
-          .apis(RequestHandlerSelectors.any())              
-          .paths(PathSelectors.any())                          
-          .build();                                           
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
     }
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringBootConf.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootConf.class, args);
+    }
 
 }
