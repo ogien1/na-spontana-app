@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import pl.lodz.p.it.naspontanaapp.domain.GetActivitiesDto;
 import pl.lodz.p.it.naspontanaapp.entities.Activity;
 import pl.lodz.p.it.naspontanaapp.service.ActivityDetailsManager;

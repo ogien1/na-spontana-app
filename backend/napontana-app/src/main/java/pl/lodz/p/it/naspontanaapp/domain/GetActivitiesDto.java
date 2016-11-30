@@ -1,13 +1,13 @@
 package pl.lodz.p.it.naspontanaapp.domain;
 
-import org.apache.tomcat.jni.Local;
-import org.joda.time.LocalDateTime;
-import pl.lodz.p.it.naspontanaapp.entities.Activity;
-
-import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.validation.constraints.NotNull;
+
+import org.joda.time.LocalDateTime;
+
+import pl.lodz.p.it.naspontanaapp.entities.Activity;
 
 /**
  * Created by piotr on 30.11.16.

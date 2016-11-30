@@ -1,8 +1,8 @@
 package pl.lodz.p.it.naspontanaapp.domain;
 
-import org.joda.time.LocalDateTime;
-
 import javax.validation.constraints.NotNull;
+
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by piotr on 30.11.16.

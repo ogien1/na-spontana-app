@@ -3,6 +3,7 @@ package pl.lodz.p.it.naspontanaapp.service;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import pl.lodz.p.it.naspontanaapp.domain.ActivityDto;
 import pl.lodz.p.it.naspontanaapp.entities.Activity;
 import pl.lodz.p.it.naspontanaapp.entities.Category;
