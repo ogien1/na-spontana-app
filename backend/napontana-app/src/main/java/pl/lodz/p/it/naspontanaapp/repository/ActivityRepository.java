@@ -6,4 +6,5 @@ import pl.lodz.p.it.naspontanaapp.entities.Activity;
 
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Long>  {
+    Activity findById(long id);
 }

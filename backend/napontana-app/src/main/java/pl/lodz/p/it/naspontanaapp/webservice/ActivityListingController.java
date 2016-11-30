@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class ActivityListingController {
 	
 	@Autowired
-	ActivityListingManager activityListingManager;
+	private ActivityListingManager activityListingManager;
 
 	@RequestMapping(value = "/friendsActivities",method = RequestMethod.GET)
 	public List<GetActivitiesDto> getFriendsActivities(@RequestParam("friendId") String[] friends){

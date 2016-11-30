@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class GetActivitiesDto {
 
     @NotNull
-    private List<String> participantsID;
+    private List<String> participantsIDs;
 
     @NotNull
     private String description;
@@ -33,7 +33,7 @@ public class GetActivitiesDto {
         GetActivitiesDto getActivitiesDto = new GetActivitiesDto();
         List<String> usersIds = activity.getUsers().stream()
                 .map(u -> u.getFacebookId()).collect(Collectors.toList());
-        getActivitiesDto.setParticipantsID(usersIds);
+        getActivitiesDto.setParticipantsIDs(usersIds);
         getActivitiesDto.setDescription(activity.getDescription());
         getActivitiesDto.setName(activity.getName());
         getActivitiesDto.setStartDate(activity.getStartDate());
@@ -41,12 +41,12 @@ public class GetActivitiesDto {
         return getActivitiesDto;
     }
 
-    public List<String> getParticipantsID() {
-        return this.participantsID;
+    public List<String> getParticipantsIDs() {
+        return this.participantsIDs;
     }
 
-    public void setParticipantsID(List<String> participantsID) {
-        this.participantsID = participantsID;
+    public void setParticipantsIDs(List<String> participantsIDs) {
+        this.participantsIDs = participantsIDs;
     }
 
     public String getDescription() {
