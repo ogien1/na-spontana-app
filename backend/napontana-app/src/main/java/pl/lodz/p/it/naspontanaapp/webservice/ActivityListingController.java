@@ -31,4 +31,12 @@ public class ActivityListingController {
                 .map(GetActivitiesDto::fromActivity)
                 .collect(Collectors.toList());
     }
+	
+	@RequestMapping(value = "/userActivities",method = RequestMethod.GET)
+	public List<GetActivitiesDto> getUserActivities(@RequestParam("facebookId") String facebookId){
+		return activityListingManager.getUserActivities(facebookId)
+				.stream()
+				.map(GetActivitiesDto::fromActivity)
+				.collect(Collectors.toList());
+	}
 }
