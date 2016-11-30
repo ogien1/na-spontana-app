@@ -13,6 +13,6 @@ public class ActivityDetailsManager {
     private ActivityRepository activityRepository;
 
     public Activity getActivity(long activtyId) {
-        return activityRepository.findById(activtyId);
+        return activityRepository.findOne(activtyId);
     }
 }

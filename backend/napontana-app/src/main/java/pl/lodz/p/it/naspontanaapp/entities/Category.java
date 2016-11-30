@@ -34,7 +34,7 @@ public class Category implements Serializable {
 	@Column(nullable=false, length=50)
 	private String verb;
 
-	//bi-directional many-to-one association to ActivityDto
+	//bi-directional many-to-one association to ActivityInputDto
 	@OneToMany(mappedBy="category")
 	private List<Activity> activities;
 

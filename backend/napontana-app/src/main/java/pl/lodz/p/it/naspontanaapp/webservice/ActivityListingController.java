@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.lodz.p.it.naspontanaapp.domain.GetActivitiesDto;
+import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto;
 import pl.lodz.p.it.naspontanaapp.service.ActivityListingManager;
+import pl.lodz.p.it.naspontanaapp.utils.DtoUtils;
 
 /**
  * Created by 'Jakub Dziworski' on 30.11.16
@@ -32,20 +33,18 @@ public class ActivityListingController {
 	private ActivityListingManager activityListingManager;
 
 	@RequestMapping(value = "/friendsActivities",method = RequestMethod.GET)
-	public List<GetActivitiesDto> getFriendsActivities(@RequestParam("friendId") String[] friends){
+	public List<ActivityOutputDto> getFriendsActivities(@RequestParam("friendId") String[] friends){
 		logger.info("getFriendsActivities {}", Arrays.asList(friends));
 		return activityListingManager.getActivities(Arrays.asList(friends))
                 .stream()
-                .map(GetActivitiesDto::fromActivity)
+                .map(DtoUtils::fromActivity)
                 .collect(Collectors.toList());
     }
 	
 	@RequestMapping(value = "/userActivities",method = RequestMethod.GET)
-	public List<GetActivitiesDto> getUserActivities(@RequestParam("facebookId") String facebookId){
+	public List<ActivityOutputDto> getUserActivities(@RequestParam("facebookId") String facebookId){
 		logger.info("getUserActivities {}", facebookId);
 		return activityListingManager.getUserActivities(facebookId)
-				.stream()
-				.map(GetActivitiesDto::fromActivity)
-				.collect(Collectors.toList());
+			.stream().map(DtoUtils::fromActivity).collect(Collectors.toList());
 	}
 }

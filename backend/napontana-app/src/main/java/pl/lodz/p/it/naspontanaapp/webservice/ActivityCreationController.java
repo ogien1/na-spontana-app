@@ -12,8 +12,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.lodz.p.it.naspontanaapp.domain.ActivityDto;
+import pl.lodz.p.it.naspontanaapp.domain.ActivityInputDto;
+import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto;
+import pl.lodz.p.it.naspontanaapp.domain.BaseActivityDto;
+import pl.lodz.p.it.naspontanaapp.domain.SimpleType;
 import pl.lodz.p.it.naspontanaapp.service.ActivityCreationManager;
+
+import java.util.List;
 
 /**
  * Created by 'Jakub Dziworski' on 30.11.16
@@ -29,14 +34,21 @@ public class ActivityCreationController {
 	ActivityCreationManager activityCreationManager;
 
 	@RequestMapping(value = "/addActivity", method = RequestMethod.POST)
-	public void addActivity(@RequestBody ActivityDto activityDto) {
-		logger.info("addActivity {}", activityDto);
-		activityCreationManager.addActivity(activityDto);
+	public void addActivity(@RequestBody ActivityInputDto activityInputDto) {
+		logger.info("addActivity {}", activityInputDto);
+		activityCreationManager.addActivity(activityInputDto);
 	}
 
 	@RequestMapping(value = "/addUserToActivity", method = RequestMethod.POST)
 	public void addUserToActivity(@RequestParam("facebookId") String facebookId, @RequestParam("activityId") long activityId) {
 		logger.info("addUserToActivity {} {}", facebookId, activityId);
 		activityCreationManager.addUserToActivity(facebookId, activityId);
+	}
+
+	@RequestMapping(value = "/similarActivities", method = RequestMethod.POST)
+	public SimpleType<List<ActivityOutputDto>> similarActivities(@RequestBody BaseActivityDto baseActivityDto,
+																@RequestParam("minutes") long minutes) {
+		logger.info("similarActivities {} {}", baseActivityDto, minutes);
+		return new SimpleType<>(activityCreationManager.similarActivities(baseActivityDto, minutes));
 	}
 }

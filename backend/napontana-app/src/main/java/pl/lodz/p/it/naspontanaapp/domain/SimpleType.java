@@ -2,13 +2,17 @@ package pl.lodz.p.it.naspontanaapp.domain;
 
 public class SimpleType<T> {
 
-    private T type;
+    private T value;
 
-    public T getType() {
-        return type;
+    public SimpleType(T value) {
+        this.value = value;
     }
 
-    public void setType(T type) {
-        this.type = type;
+    public T getValue() {
+        return value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
     }
 }
