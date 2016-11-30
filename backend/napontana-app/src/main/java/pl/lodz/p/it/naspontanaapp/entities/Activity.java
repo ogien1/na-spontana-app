@@ -9,6 +9,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,7 +52,7 @@ public class Activity implements Serializable {
 
 	//bi-directional many-to-many association to User
 	@ManyToMany(mappedBy="activities", cascade = CascadeType.ALL)
-	private List<User> users;
+	private List<User> users = new ArrayList<>();
 
 	public static long getSerialVersionUID() {
 		return serialVersionUID;

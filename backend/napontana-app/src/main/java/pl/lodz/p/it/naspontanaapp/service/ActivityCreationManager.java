@@ -11,8 +11,6 @@ import pl.lodz.p.it.naspontanaapp.repository.ActivityRepository;
 import pl.lodz.p.it.naspontanaapp.repository.CategoryRepository;
 import pl.lodz.p.it.naspontanaapp.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by 'Jakub Dziworski' on 30.11.16
@@ -32,17 +30,15 @@ public class ActivityCreationManager {
     public void addActivity(ActivityDto activityDto) {
         Category category = categoryRepository.findOne(activityDto.getCategory());
         User user = userRepository.findUserByFacebookId(activityDto.getFacebookId());
-        List<User> users = new ArrayList<>();
-        users.add(user);
 
         Activity activity = new Activity();
         activity.setDescription(activityDto.getDescription());
         activity.setName(activityDto.getName());
         activity.setStartDate(activityDto.getStartDate());
-        activity.setUsers(users);
         activity.setPublicationDate(LocalDateTime.now());
         activity.setCategory(category);
         activity.setPublished(false);
+        user.getActivities().add(activity);
 
         activityRepository.save(activity);
     }

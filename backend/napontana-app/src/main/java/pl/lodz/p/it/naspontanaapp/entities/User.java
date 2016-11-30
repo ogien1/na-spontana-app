@@ -2,6 +2,8 @@ package pl.lodz.p.it.naspontanaapp.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,7 +42,7 @@ public class User implements Serializable {
 			@JoinColumn(name="activity_id", nullable=false)
 			}
 		)
-	private List<Activity> activities;
+	private List<Activity> activities = new ArrayList<>();
 
 	public User() {
 	}
