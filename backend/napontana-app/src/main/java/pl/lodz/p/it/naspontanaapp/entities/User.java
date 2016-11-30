@@ -29,7 +29,7 @@ public class User implements Serializable {
 	@Column(nullable=false, length=50)
 	private String name;
 
-	//bi-directional many-to-many association to Activity
+	//bi-directional many-to-many association to ActivityDto
 	@ManyToMany
 	@JoinTable(
 		name="user_activity"

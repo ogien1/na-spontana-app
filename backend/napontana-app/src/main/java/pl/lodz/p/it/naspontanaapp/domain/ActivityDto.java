@@ -1,5 +1,7 @@
 package pl.lodz.p.it.naspontanaapp.domain;
 
+import org.joda.time.DateTime;
+
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -19,7 +21,7 @@ public class ActivityDto {
     private String name;
 
     @NotNull
-    private LocalDateTime startDate;
+    private DateTime startDate;
 
     @NotNull
     private long category;
@@ -48,11 +50,11 @@ public class ActivityDto {
         this.name = name;
     }
 
-    public LocalDateTime getStartDate() {
+    public DateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(DateTime startDate) {
         this.startDate = startDate;
     }
 

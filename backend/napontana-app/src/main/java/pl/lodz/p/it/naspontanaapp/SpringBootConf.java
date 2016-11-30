@@ -21,6 +21,10 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import javax.servlet.Filter;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.filter.AbstractRequestLoggingFilter;
+
 @Configuration
 @ComponentScan
 @EnableSwagger2
@@ -59,6 +63,30 @@ public class SpringBootConf extends SpringBootServletInitializer {
                 .paths(PathSelectors.any())
                 .build();
     }
+
+//    @Bean
+//    public Filter loggingFilter(){
+//        AbstractRequestLoggingFilter f = new AbstractRequestLoggingFilter() {
+//
+//            @Override
+//            protected void beforeRequest(HttpServletRequest request, String message) {
+//                System.out.println("beforeRequest: " +message);
+//            }
+//
+//            @Override
+//            protected void afterRequest(HttpServletRequest request, String message) {
+//                System.out.println("afterRequest: " + message);
+//            }
+//        };
+//        f.setIncludeClientInfo(true);
+//        f.setIncludePayload(true);
+//        f.setIncludeQueryString(true);
+//
+//        f.setBeforeMessagePrefix("BEFORE REQUEST  [");
+//        f.setAfterMessagePrefix("AFTER REQUEST    [");
+//        f.setAfterMessageSuffix("]\n");
+//        return f;
+//    }
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootConf.class, args);

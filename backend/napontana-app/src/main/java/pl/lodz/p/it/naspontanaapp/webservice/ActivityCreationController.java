@@ -6,10 +6,12 @@ import javax.transaction.Transactional.TxType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import pl.lodz.p.it.naspontanaapp.domain.ActivityDto;
 import pl.lodz.p.it.naspontanaapp.service.ActivityCreationManager;
 
 /**
@@ -19,16 +21,15 @@ import pl.lodz.p.it.naspontanaapp.service.ActivityCreationManager;
 @RestController
 @RequestMapping("/activity")
 public class ActivityCreationController {
-	
+
+	private static final Logger logger = LoggerFactory.getLogger(ActivityCreationController.class);
+
 	@Autowired
 	ActivityCreationManager activityCreationManager;
-	private static final Logger LOGGER = LoggerFactory.getLogger(ActivityCreationController.class);
 
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public String test(){
-		LOGGER.info("test|START - wywolano z parametrami: " );
-//		activityCreationManager.doSth();
-		LOGGER.info("test|STOP - zapisano: ");
-		return "activity test2 ok";
+	@RequestMapping(value = "/addActivity", method = RequestMethod.POST)
+	public void addActivity(@RequestBody ActivityDto activityDto) {
+		logger.info("addActivity {}", activityDto);
+		activityCreationManager.addActivity(activityDto);
 	}
 }
