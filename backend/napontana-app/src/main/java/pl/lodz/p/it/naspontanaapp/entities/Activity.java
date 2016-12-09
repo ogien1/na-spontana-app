@@ -22,7 +22,7 @@ import org.joda.time.LocalDateTime;
 
 /**
  * The persistent class for the activity database table.
- * 
+ *
  */
 @Entity
 @Table(name="activity")
@@ -128,4 +128,50 @@ public class Activity implements Serializable {
 		this.users = users;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || this.getClass() != o.getClass()) return false;
+
+		Activity activity = (Activity) o;
+
+		if (this.id != null ? !this.id.equals(activity.id) : activity.id != null) return false;
+		if (this.description != null ? !this.description.equals(activity.description) : activity.description != null)
+			return false;
+		if (this.name != null ? !this.name.equals(activity.name) : activity.name != null) return false;
+		if (this.publicationDate != null ? !this.publicationDate.equals(activity.publicationDate) : activity.publicationDate != null)
+			return false;
+		if (this.published != null ? !this.published.equals(activity.published) : activity.published != null) return false;
+		if (this.startDate != null ? !this.startDate.equals(activity.startDate) : activity.startDate != null) return false;
+		if (this.category != null ? !this.category.equals(activity.category) : activity.category != null) return false;
+		return this.users != null ? this.users.equals(activity.users) : activity.users == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = this.id != null ? this.id.hashCode() : 0;
+		result = 31 * result + (this.description != null ? this.description.hashCode() : 0);
+		result = 31 * result + (this.name != null ? this.name.hashCode() : 0);
+		result = 31 * result + (this.publicationDate != null ? this.publicationDate.hashCode() : 0);
+		result = 31 * result + (this.published != null ? this.published.hashCode() : 0);
+		result = 31 * result + (this.startDate != null ? this.startDate.hashCode() : 0);
+		result = 31 * result + (this.category != null ? this.category.hashCode() : 0);
+		result = 31 * result + (this.users != null ? this.users.hashCode() : 0);
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "Activity{" +
+				"id=" + id +
+				", description='" + description + '\'' +
+				", name='" + name + '\'' +
+				", publicationDate=" + publicationDate +
+				", published=" + published +
+				", startDate=" + startDate +
+				", category=" + category +
+				", users=" + users +
+				'}';
+	}
 }

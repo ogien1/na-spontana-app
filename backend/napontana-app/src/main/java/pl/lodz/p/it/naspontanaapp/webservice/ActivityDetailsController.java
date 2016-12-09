@@ -16,7 +16,7 @@ import pl.lodz.p.it.naspontanaapp.utils.DtoUtils;
 /**
  * Created by 'Jakub Dziworski' on 30.11.16
 // */
-@RestController("/activity")
+@RestController
 public class ActivityDetailsController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ActivityDetailsController.class);
@@ -24,7 +24,7 @@ public class ActivityDetailsController {
     @Autowired
     private ActivityDetailsManager activityDetailsManager;
 
-    @RequestMapping(value = "/details/{activityId}",method = RequestMethod.GET)
+    @RequestMapping(value = "/activity/details/{activityId}",method = RequestMethod.GET)
     public ActivityOutputDto activityDetails(@PathVariable long activityId) {
         logger.info("activityDetails {}", activityId);
         Activity activity = activityDetailsManager.getActivity(activityId);

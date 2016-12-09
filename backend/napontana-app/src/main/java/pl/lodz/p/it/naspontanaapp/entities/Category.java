@@ -87,4 +87,36 @@ public class Category implements Serializable {
 		return activity;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || this.getClass() != o.getClass()) return false;
+
+		Category category = (Category) o;
+
+		if (this.id != null ? !this.id.equals(category.id) : category.id != null) return false;
+		if (this.name != null ? !this.name.equals(category.name) : category.name != null) return false;
+		if (this.verb != null ? !this.verb.equals(category.verb) : category.verb != null) return false;
+		return this.activities != null ? this.activities.equals(category.activities) : category.activities == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = this.id != null ? this.id.hashCode() : 0;
+		result = 31 * result + (this.name != null ? this.name.hashCode() : 0);
+		result = 31 * result + (this.verb != null ? this.verb.hashCode() : 0);
+		result = 31 * result + (this.activities != null ? this.activities.hashCode() : 0);
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "Category{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", verb='" + verb + '\'' +
+				", activities=" + activities +
+				'}';
+	}
 }

@@ -22,7 +22,7 @@ import pl.lodz.p.it.naspontanaapp.utils.DtoUtils;
 /**
  * Created by 'Jakub Dziworski' on 30.11.16
  */
-@Transactional(value = TxType.REQUIRES_NEW)
+@Transactional
 @RestController
 @RequestMapping("/activity")
 public class ActivityListingController {

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.it.naspontanaapp.domain.ActivityInputDto;
 import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto;
-import pl.lodz.p.it.naspontanaapp.domain.BaseActivityDto;
+import pl.lodz.p.it.naspontanaapp.domain.SimilarActivityInputDto;
 import pl.lodz.p.it.naspontanaapp.entities.Activity;
 import pl.lodz.p.it.naspontanaapp.entities.Category;
 import pl.lodz.p.it.naspontanaapp.entities.User;
@@ -17,6 +17,7 @@ import pl.lodz.p.it.naspontanaapp.utils.TimeUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 
 /**
@@ -34,7 +35,7 @@ public class ActivityCreationManager {
     @Autowired
     CategoryRepository categoryRepository;
 
-    public void addActivity(ActivityInputDto activityInputDto) {
+    public Long addActivity(ActivityInputDto activityInputDto) {
         Category category = categoryRepository.findOne((activityInputDto.getCategoryId()));
         User user = userRepository.findUserByFacebookId(activityInputDto.getFacebookId());
 
@@ -47,19 +48,20 @@ public class ActivityCreationManager {
         activity.setPublished(false);
         user.getActivities().add(activity);
 
-        activityRepository.save(activity);
+        return activityRepository.save(activity).getId();
     }
 
     public void addUserToActivity(String facebookId, long activityId) {
         Activity activity = activityRepository.findOne(activityId);
         User user = userRepository.findUserByFacebookId(facebookId);
         activity.getUsers().add(user);
+        user.getActivities().add(activity);
     }
 
-    public List<ActivityOutputDto> similarActivities(BaseActivityDto baseActivityDto, long minutes) {
+    public List<ActivityOutputDto> similarActivities(SimilarActivityInputDto inputDTO, long minutes) {
         List<Activity> activities = activityRepository.findAll();
         List<Activity> filteredActivities = activities.stream()
-                .filter(a -> (TimeUtils.getMinutes(baseActivityDto.getStartDate(), a.getStartDate()) <= minutes))
+                .filter(a -> (TimeUtils.getMinutes(inputDTO.getStart(), a.getStartDate()) <= minutes))
                 .collect(Collectors.toList());
         return filteredActivities.stream().map(DtoUtils::fromActivity).collect(Collectors.toList());
     }
