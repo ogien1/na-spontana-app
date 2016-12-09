@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NaSpontana</string>
+    <string name="app_id">947990768618406</string>
+    <string name="title_activity_dashboard">DashboardActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
