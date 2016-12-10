@@ -34,21 +34,21 @@ public class ActivityListingController {
 
 	@RequestMapping(value = "/friendsActivities",method = RequestMethod.GET)
 	public List<ActivityOutputDto> getFriendsActivities(@RequestParam("friendId") String[] friends){
-		logger.info("getFriendsActivities - START{}", Arrays.asList(friends));
+		logger.info("getFriendsActivities - START {}", Arrays.asList(friends));
 		List<ActivityOutputDto> list = activityListingManager.getActivities(Arrays.asList(friends))
         .stream()
         .map(DtoUtils::fromActivity)
         .collect(Collectors.toList());
-		logger.info("getFriendsActivities - STOP{}", list);
+		logger.info("getFriendsActivities - STOP {}", list);
 		return list;
     }
 	
 	@RequestMapping(value = "/userActivities",method = RequestMethod.GET)
 	public List<ActivityOutputDto> getUserActivities(@RequestParam("facebookId") String facebookId){
-		logger.info("getUserActivities - START{}", facebookId);
+		logger.info("getUserActivities - START {}", facebookId);
 		List<ActivityOutputDto> collect = activityListingManager.getUserActivities(facebookId)
 			.stream().map(DtoUtils::fromActivity).collect(Collectors.toList());
-		logger.info("getUserActivities - STOP{}", collect);
+		logger.info("getUserActivities - STOP {}", collect);
 		return collect;
 	}
 }

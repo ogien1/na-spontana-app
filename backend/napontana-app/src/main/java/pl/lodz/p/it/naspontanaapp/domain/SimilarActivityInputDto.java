@@ -1,34 +1,38 @@
 package pl.lodz.p.it.naspontanaapp.domain;
 
-import org.joda.time.LocalDateTime;
+import java.util.Arrays;
 
 /**
  * Created by 'Jakub Dziworski' on 09.12.16
  */
-public class SimilarActivityInputDto {
-    private LocalDateTime start;
+public class SimilarActivityInputDto extends ActivityInputDto{
+   
+	private long minutesDiff;
+	private String[] friends;
 
-    public LocalDateTime getStart() {
-        return this.start;
-    }
+	public long getMinutesDiff() {
+		return minutesDiff;
+	}
 
-    public void setStart(LocalDateTime start) {
-        this.start = start;
-    }
+	public void setMinutesDiff(long minutesDiff) {
+		this.minutesDiff = minutesDiff;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
+	public String[] getFriends() {
+		return friends;
+	}
 
-        SimilarActivityInputDto that = (SimilarActivityInputDto) o;
+	public void setFriends(String[] friends) {
+		this.friends = friends;
+	}
 
-        return this.start != null ? this.start.equals(that.start) : that.start == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        return this.start != null ? this.start.hashCode() : 0;
-    }
+	@Override
+	public String toString() {
+		return "SimilarActivityInputDto [minutesDiff=" + minutesDiff + ", friends=" + Arrays.toString(friends)
+				+ ", startDate=" + startDate + ", categoryId=" + categoryId + ", description=" + description + ", name="
+				+ name + "]";
+	}
+	
+	
+	
 }

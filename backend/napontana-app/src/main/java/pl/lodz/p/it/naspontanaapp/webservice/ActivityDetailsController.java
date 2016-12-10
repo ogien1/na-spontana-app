@@ -26,10 +26,10 @@ public class ActivityDetailsController {
 
     @RequestMapping(value = "/activity/details/{activityId}",method = RequestMethod.GET)
     public ActivityOutputDto activityDetails(@PathVariable long activityId) {
-        logger.info("activityDetails - START{}", activityId);
+        logger.info("activityDetails - START {}", activityId);
         Activity activity = activityDetailsManager.getActivity(activityId);
         ActivityOutputDto fromActivity = DtoUtils.fromActivity(activity);
-        logger.info("activityDetails - STOP{}", fromActivity);
+        logger.info("activityDetails - STOP {}", fromActivity);
         return fromActivity;
     }
 }

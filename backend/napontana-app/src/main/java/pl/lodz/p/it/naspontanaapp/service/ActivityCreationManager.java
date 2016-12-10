@@ -15,7 +15,11 @@ import pl.lodz.p.it.naspontanaapp.repository.UserRepository;
 import pl.lodz.p.it.naspontanaapp.utils.DtoUtils;
 import pl.lodz.p.it.naspontanaapp.utils.TimeUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -70,10 +74,20 @@ public class ActivityCreationManager {
         user.getActivities().add(activity);
     }
 
-    public List<ActivityOutputDto> similarActivities(SimilarActivityInputDto inputDTO, long minutes) {
-        List<Activity> activities = activityRepository.findAll();
-        List<Activity> filteredActivities = activities.stream()
-                .filter(a -> (TimeUtils.getMinutes(inputDTO.getStart(), a.getStartDate()) <= minutes))
+    public List<ActivityOutputDto> findSimilarActivities(SimilarActivityInputDto inputDTO) {
+    
+    	List<String> friends = Arrays.asList(inputDTO.getFriends());
+    	Map<Long, Activity> friendsActivities = new HashMap<Long, Activity>();
+    	for (String friendId : friends) {
+    		List<Activity> activities = activityRepository.findActivityByUsers_FacebookId(friendId);
+    		Map<Long, Activity> mapActivities = activities.stream().collect(Collectors.toMap(Activity::getId, a -> a));
+    		friendsActivities.putAll(mapActivities);
+		}
+    	List<Activity> friendsActivitiesList = new ArrayList<Activity>(friendsActivities.values());
+        List<Activity> filteredActivities = friendsActivitiesList.stream()
+                .filter(a -> (TimeUtils.getMinutes(inputDTO.getStartDate(), a.getStartDate()) 
+                		<= inputDTO.getMinutesDiff()))
+                .filter(a -> inputDTO.getCategoryId() == a.getCategory().getId())
                 .collect(Collectors.toList());
         return filteredActivities.stream().map(DtoUtils::fromActivity).collect(Collectors.toList());
     }
