@@ -2,6 +2,7 @@ package pl.lodz.p.it.naspontanaapp.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.joda.time.LocalDateTime
+import org.joda.time.format.DateTimeFormat
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -50,14 +51,7 @@ class IntegrationTest extends Specification {
 		given:
 			def category = categoryRepository.save(createCategory())
 			def activity = activityRepository.save(createActivity(category: category))
-			def expectedActivity = new ActivityOutputDto(
-					activityId: activity.id,
-					name: activity.name,
-					description: activity.description,
-					participantsID: activity.users.collect { it.facebookId },
-					startDate: activity.startDate,
-					categoryId: activity.category.id,
-			)
+			def expectedActivity = DtoUtils.fromActivity(activity)
 		when:
 			def response = mvc.perform(get("/activity/details/$activity.id")).andReturn().response
 		then:
@@ -75,7 +69,7 @@ class IntegrationTest extends Specification {
 					"facebookId": $user.facebookId,
 					"name": "running",
 					"description": "running for one hour",
-					"startDate": 1481231525
+					"startDate": "2015-06-13T15:25:33"
 					}
 			""".stripIndent()
 		when:
@@ -87,7 +81,7 @@ class IntegrationTest extends Specification {
 			def insertedActivity = activityRepository.findOne(response.contentAsString.toLong())
 			insertedActivity.name == "running"
 			insertedActivity.description == "running for one hour"
-			insertedActivity.startDate.toDateTime().millis == 1481231525
+			insertedActivity.startDate == LocalDateTime.parse("2015-06-13T15:25:33")
 			insertedActivity.users == []
 			insertedActivity.category == category
 	}
@@ -200,8 +194,8 @@ class IntegrationTest extends Specification {
 	def createActivity(Map properties = [:]) {
 		def defaultProperties = [name           : "Aktywnosc",
 								 description    : "AktywnoscDesc",
-								 startDate      : new LocalDateTime(1481231525L),
-								 publicationDate: new LocalDateTime(1481231525L),
+								 startDate      : LocalDateTime.parse("2015-06-14T15:25:33",DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss")),
+								 publicationDate: LocalDateTime.parse("2015-06-13T15:25:33",DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss")),
 								 published      : true,
 								 category       : createCategory(),
 								 users          : []]
