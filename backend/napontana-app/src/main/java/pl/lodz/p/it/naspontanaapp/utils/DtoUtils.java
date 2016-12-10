@@ -1,7 +1,9 @@
 package pl.lodz.p.it.naspontanaapp.utils;
 
 import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto;
+import pl.lodz.p.it.naspontanaapp.domain.CategoryOutputDto;
 import pl.lodz.p.it.naspontanaapp.entities.Activity;
+import pl.lodz.p.it.naspontanaapp.entities.Category;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +24,14 @@ public class DtoUtils {
         activityOutputDto.setCategoryId(activity.getCategory().getId());
         activityOutputDto.setActivityId(activity.getId());
         return activityOutputDto;
+    }
+
+    public static CategoryOutputDto categoryTocategoryOutputDto(Category category) {
+        CategoryOutputDto categoryOutputDto = new CategoryOutputDto();
+        categoryOutputDto.setId(category.getId());
+        categoryOutputDto.setName(category.getName());
+        categoryOutputDto.setVerb(category.getVerb());
+        return categoryOutputDto;
     }
 
 }

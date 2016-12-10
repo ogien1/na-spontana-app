@@ -2,12 +2,9 @@ package pl.lodz.p.it.naspontanaapp.webservice;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
 
-import org.junit.experimental.categories.Categories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto;
+import pl.lodz.p.it.naspontanaapp.domain.CategoryOutputDto;
 import pl.lodz.p.it.naspontanaapp.entities.Category;
 import pl.lodz.p.it.naspontanaapp.service.ActivityListingManager;
 import pl.lodz.p.it.naspontanaapp.utils.DtoUtils;
+
+import static java.util.stream.Collectors.*;
 
 /**
  * Created by 'Jakub Dziworski' on 30.11.16
@@ -40,7 +40,7 @@ public class ActivityListingController {
 		List<ActivityOutputDto> list = activityListingManager.getActivities(Arrays.asList(friends))
         .stream()
         .map(DtoUtils::fromActivity)
-        .collect(Collectors.toList());
+        .collect(toList());
 		logger.info("getFriendsActivities - STOP {}", list);
 		return list;
     }
@@ -49,16 +49,16 @@ public class ActivityListingController {
 	public List<ActivityOutputDto> getUserActivities(@RequestParam("facebookId") String facebookId){
 		logger.info("getUserActivities - START {}", facebookId);
 		List<ActivityOutputDto> collect = activityListingManager.getUserActivities(facebookId)
-			.stream().map(DtoUtils::fromActivity).collect(Collectors.toList());
+			.stream().map(DtoUtils::fromActivity).collect(toList());
 		logger.info("getUserActivities - STOP {}", collect);
 		return collect;
 	}
 	
 	@RequestMapping(value = "/categories",method = RequestMethod.GET)
-	public List<Category> getCategories(){
+	public List<CategoryOutputDto> getCategories(){
 		logger.info("getCategories - START");
 		List<Category> categories = activityListingManager.getCategories();
 		logger.info("getCategories - STOP {}", categories);
-		return categories;
+		return categories.stream().map(DtoUtils::categoryTocategoryOutputDto).collect(toList());
 	}
 }

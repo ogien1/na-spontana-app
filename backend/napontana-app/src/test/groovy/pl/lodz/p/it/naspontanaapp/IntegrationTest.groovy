@@ -1,4 +1,4 @@
-package pl.lodz.p.it.naspontanaapp.service
+package pl.lodz.p.it.naspontanaapp
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.joda.time.LocalDateTime
@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.transaction.annotation.Transactional
 import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto
+import pl.lodz.p.it.naspontanaapp.domain.CategoryOutputDto
 import pl.lodz.p.it.naspontanaapp.entities.Activity
 import pl.lodz.p.it.naspontanaapp.entities.Category
 import pl.lodz.p.it.naspontanaapp.entities.User
@@ -146,6 +147,25 @@ class IntegrationTest extends Specification {
 			response.status == 200
 			def actualBody = objectMapper.readValue(response.contentAsString, ActivityOutputDto[]).toList()
 			actualBody == expectedBody
+	}
+
+	def "should get all categories"() {
+		given:
+			def category1 = categoryRepository.save(createCategory(name: "cat1"))
+			def category2 = categoryRepository.save(createCategory(name: "cat2"))
+			def category3 = categoryRepository.save(createCategory(name: "cat3"))
+			def expectedResult = [
+			        new CategoryOutputDto(id:category1.id,name:category1.name,verb: category1.verb),
+			        new CategoryOutputDto(id:category2.id,name:category2.name,verb: category2.verb),
+			        new CategoryOutputDto(id:category3.id,name:category3.name,verb: category3.verb),
+			]
+		when:
+			def response = mvc.perform(get("/activity/categories"))
+					.andReturn().response
+		then:
+			response.status == 200
+			println(response.contentAsString)
+			expectedResult == objectMapper.readValue(response.contentAsString,CategoryOutputDto[]).toList()
 	}
 
 	@Ignore("To jeszce niestety nie działa. Możesz piotrek odpalić i zobaczysz co jest nie tak na diffie")

@@ -161,17 +161,4 @@ public class Activity implements Serializable {
 		return result;
 	}
 
-	@Override
-	public String toString() {
-		return "Activity{" +
-				"id=" + id +
-				", description='" + description + '\'' +
-				", name='" + name + '\'' +
-				", publicationDate=" + publicationDate +
-				", published=" + published +
-				", startDate=" + startDate +
-				", category=" + category +
-				", users=" + users +
-				'}';
-	}
 }
