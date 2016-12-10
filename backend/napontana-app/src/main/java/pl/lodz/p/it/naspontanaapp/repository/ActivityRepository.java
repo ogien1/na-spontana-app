@@ -11,5 +11,6 @@ import pl.lodz.p.it.naspontanaapp.entities.Activity;
 public interface ActivityRepository extends JpaRepository<Activity, Long>  {
 
 	List<Activity> findActivityByUsers_FacebookId(String friendId);
+	List<Activity> findActivityByOwner_facebookId(String facebookId);
 
 }

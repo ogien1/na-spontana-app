@@ -33,19 +33,17 @@ public class ActivityListingManager {
     public List<Activity> getActivities(List<String> friendsIds) {
         List<Activity> allActivities = activityRepository.findAll();
         return allActivities.stream()
-                .filter(a -> activityHasAtLeastOneUser(a,friendsIds))
+                .filter(a -> activityBelongsToOneOfFriend(a,friendsIds))
                 .collect(Collectors.toList());
     }
 
-    private boolean activityHasAtLeastOneUser(Activity activity, List<String> friendsIds) {
-        return activity.getUsers().stream()
-                .map(User::getFacebookId)
-                .anyMatch(friendsIds::contains);
+    private boolean activityBelongsToOneOfFriend(Activity activity, List<String> friendsIds) {
+        String ownerFbId = activity.getOwner().getFacebookId();
+        return friendsIds.contains(ownerFbId);
     }
 
 	public List<Activity> getUserActivities(String facebookId) {
-		User user = userRepository.findUserByFacebookId(facebookId);
-		return user.getActivities();
+		return activityRepository.findActivityByOwner_facebookId(facebookId);
 	}
 
 	public List<Category> getCategories() {

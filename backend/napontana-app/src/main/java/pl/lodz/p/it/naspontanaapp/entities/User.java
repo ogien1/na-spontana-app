@@ -30,6 +30,9 @@ public class User implements Serializable {
 
     @Column(nullable = false, length = 50)
     private String name;
+    
+	@OneToMany(mappedBy="owner")
+	private List<Activity> ownerActivities = new ArrayList<>();
 
     //bi-directional many-to-many association to ActivityInputDto
     @ManyToMany
@@ -123,4 +126,12 @@ public class User implements Serializable {
         result = 31 * result + (this.activities != null ? this.activities.hashCode() : 0);
         return result;
     }
+
+	public List<Activity> getOwnerActivities() {
+		return ownerActivities;
+	}
+
+	public void setOwnerActivities(List<Activity> ownerActivities) {
+		this.ownerActivities = ownerActivities;
+	}
 }

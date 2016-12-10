@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -55,6 +56,10 @@ public class Activity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="category_id", nullable=false)
 	private Category category;
+	
+	@ManyToOne
+	@JoinColumn(name="owner_id", nullable=false)
+	private User owner;
 
 	//bi-directional many-to-many association to User
 	@ManyToMany(mappedBy="activities", cascade = CascadeType.ALL)
@@ -159,6 +164,14 @@ public class Activity implements Serializable {
 		result = 31 * result + (this.category != null ? this.category.hashCode() : 0);
 		result = 31 * result + (this.users != null ? this.users.hashCode() : 0);
 		return result;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 
 }

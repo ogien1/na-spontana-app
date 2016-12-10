@@ -39,6 +39,9 @@ public class ActivityCreationManager {
 
     @Autowired
     CategoryRepository categoryRepository;
+    
+    @Autowired
+    ActivityListingManager activityListingManager;
 
     public Long addActivity(ActivityInputDto activityInputDto) {
         Category category = categoryRepository.findOne((activityInputDto.getCategoryId()));
@@ -54,7 +57,8 @@ public class ActivityCreationManager {
         activity.setPublicationDate(LocalDateTime.now());
         activity.setCategory(category);
         activity.setPublished(false);
-        user.getActivities().add(activity);
+        //przypisanie aktywnosci wlascicielowi
+        activity.setOwner(user);
 
         return activityRepository.save(activity).getId();
     }
@@ -77,15 +81,9 @@ public class ActivityCreationManager {
 
     public List<ActivityOutputDto> findSimilarActivities(SimilarActivityInputDto inputDTO) {
 
-    	List<String> friends = Arrays.asList(inputDTO.getFriends());
-    	Map<Long, Activity> friendsActivities = new HashMap<Long, Activity>();
-    	for (String friendId : friends) {
-    		List<Activity> activities = activityRepository.findActivityByUsers_FacebookId(friendId);
-    		Map<Long, Activity> mapActivities = activities.stream().collect(Collectors.toMap(Activity::getId, a -> a));
-    		friendsActivities.putAll(mapActivities);
-		}
-    	List<Activity> friendsActivitiesList = new ArrayList<Activity>(friendsActivities.values());
-        List<Activity> filteredActivities = friendsActivitiesList.stream()
+    	List<String> friendsIds = Arrays.asList(inputDTO.getFriends());
+    	List<Activity> friendsActivities = activityListingManager.getActivities(friendsIds);
+        List<Activity> filteredActivities = friendsActivities.stream()
                 .filter(a -> (TimeUtils.getMinutes(DateFormater.convert(inputDTO.getStartDate()), a.getStartDate())
                 		<= inputDTO.getMinutesDiff()))
                 .filter(a -> inputDTO.getCategoryId() == a.getCategory().getId())

@@ -23,6 +23,7 @@ public class DtoUtils {
         activityOutputDto.setStartDate(DateFormater.convert(activity.getStartDate()));
         activityOutputDto.setCategoryId(activity.getCategory().getId());
         activityOutputDto.setActivityId(activity.getId());
+        activityOutputDto.setOwnerId(activity.getOwner().getFacebookId());
         return activityOutputDto;
     }
 

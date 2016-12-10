@@ -12,6 +12,7 @@ public class ActivityOutputDto {
     protected long categoryId;
     protected String description;
     protected String name;
+    protected String ownerFbId;
     @NotNull
     private List<String> participantsID;
 
@@ -76,6 +77,7 @@ public class ActivityOutputDto {
         if (this.activityId != that.activityId) return false;
         if (this.startDate != null ? !this.startDate.equals(that.startDate) : that.startDate != null) return false;
         if (this.description != null ? !this.description.equals(that.description) : that.description != null) return false;
+        if (this.ownerFbId != null ? !this.ownerFbId.equals(that.ownerFbId) : that.ownerFbId != null) return false;
         if (this.name != null ? !this.name.equals(that.name) : that.name != null) return false;
         return this.participantsID != null ? this.participantsID.equals(that.participantsID) : that.participantsID == null;
 
@@ -86,6 +88,7 @@ public class ActivityOutputDto {
         int result = this.startDate != null ? this.startDate.hashCode() : 0;
         result = 31 * result + (int) (this.categoryId ^ this.categoryId >>> 32);
         result = 31 * result + (this.description != null ? this.description.hashCode() : 0);
+        result = 31 * result + (this.ownerFbId != null ? this.ownerFbId.hashCode() : 0);
         result = 31 * result + (this.name != null ? this.name.hashCode() : 0);
         result = 31 * result + (this.participantsID != null ? this.participantsID.hashCode() : 0);
         result = 31 * result + (int) (this.activityId ^ this.activityId >>> 32);
@@ -97,10 +100,19 @@ public class ActivityOutputDto {
         return "ActivityOutputDto{" +
                 "startDate=" + startDate +
                 ", categoryId=" + categoryId +
+                ", ownerId=" + ownerFbId +
                 ", description='" + description + '\'' +
                 ", name='" + name + '\'' +
                 ", participantsID=" + participantsID +
                 ", activityId=" + activityId +
                 '}';
     }
+
+	public String getOwnerFbId() {
+		return ownerFbId;
+	}
+
+	public void setOwnerId(String ownerFbId) {
+		this.ownerFbId = ownerFbId;
+	}
 }
