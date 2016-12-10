@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
+import org.junit.experimental.categories.Categories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto;
+import pl.lodz.p.it.naspontanaapp.entities.Category;
 import pl.lodz.p.it.naspontanaapp.service.ActivityListingManager;
 import pl.lodz.p.it.naspontanaapp.utils.DtoUtils;
 
@@ -50,5 +52,13 @@ public class ActivityListingController {
 			.stream().map(DtoUtils::fromActivity).collect(Collectors.toList());
 		logger.info("getUserActivities - STOP {}", collect);
 		return collect;
+	}
+	
+	@RequestMapping(value = "/categories",method = RequestMethod.GET)
+	public List<Category> getCategories(){
+		logger.info("getCategories - START");
+		List<Category> categories = activityListingManager.getCategories();
+		logger.info("getCategories - STOP {}", categories);
+		return categories;
 	}
 }
