@@ -1,7 +1,5 @@
 package pl.lodz.p.it.naspontanaapp.domain;
 
-import org.joda.time.LocalDateTime;
-
 import javax.validation.constraints.NotNull;
 
 /**
@@ -9,7 +7,7 @@ import javax.validation.constraints.NotNull;
  */
 public class ActivityInputDto {
 
-    protected LocalDateTime startDate;
+    protected String startDate;
     protected long categoryId;
     protected String description;
     protected String name;
@@ -24,11 +22,11 @@ public class ActivityInputDto {
         this.facebookId = facebookId;
     }
 
-    public LocalDateTime getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 

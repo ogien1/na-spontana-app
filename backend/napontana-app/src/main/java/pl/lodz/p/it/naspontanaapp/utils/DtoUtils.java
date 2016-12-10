@@ -18,7 +18,7 @@ public class DtoUtils {
         activityOutputDto.setParticipantsID(usersIds);
         activityOutputDto.setDescription(activity.getDescription());
         activityOutputDto.setName(activity.getName());
-        activityOutputDto.setStartDate(activity.getStartDate());
+        activityOutputDto.setStartDate(DateFormater.convert(activity.getStartDate()));
         activityOutputDto.setCategoryId(activity.getCategory().getId());
         activityOutputDto.setActivityId(activity.getId());
         return activityOutputDto;
