@@ -38,6 +38,9 @@ public class ActivityCreationManager {
     public Long addActivity(ActivityInputDto activityInputDto) {
         Category category = categoryRepository.findOne((activityInputDto.getCategoryId()));
         User user = userRepository.findUserByFacebookId(activityInputDto.getFacebookId());
+        if(user == null){
+        	user = createNewUser(activityInputDto);
+        }
 
         Activity activity = new Activity();
         activity.setDescription(activityInputDto.getDescription());
@@ -51,7 +54,16 @@ public class ActivityCreationManager {
         return activityRepository.save(activity).getId();
     }
 
-    public void addUserToActivity(String facebookId, long activityId) {
+    private User createNewUser(ActivityInputDto activityInputDto) {
+    	String facebookId = activityInputDto.getFacebookId();
+    	User user = new User();
+    	user.setName("");
+    	user.setLastname("");
+    	user.setFacebookId(facebookId);
+    	return userRepository.save(user);
+    }
+
+	public void addUserToActivity(String facebookId, long activityId) {
         Activity activity = activityRepository.findOne(activityId);
         User user = userRepository.findUserByFacebookId(facebookId);
         activity.getUsers().add(user);

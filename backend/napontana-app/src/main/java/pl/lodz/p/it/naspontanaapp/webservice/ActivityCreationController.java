@@ -33,20 +33,25 @@ public class ActivityCreationController {
 
 	@RequestMapping(value = "/addActivity", method = RequestMethod.POST)
 	public Long addActivity(@RequestBody ActivityInputDto activityInputDto) {
-		logger.info("addActivity {}", activityInputDto);
-		return activityCreationManager.addActivity(activityInputDto);
+		logger.info("addActivity - START{}", activityInputDto);
+		Long activityId = activityCreationManager.addActivity(activityInputDto);
+		logger.info("addActivity - END{}", activityId.toString());
+		return activityId;
 	}
 
 	@RequestMapping(value = "/addUserToActivity", method = RequestMethod.POST)
 	public void addUserToActivity(@RequestParam("facebookId") String facebookId, @RequestParam("activityId") long activityId) {
-		logger.info("addUserToActivity {} {}", facebookId, activityId);
+		logger.info("addUserToActivity - START {} {}", facebookId, activityId);
 		activityCreationManager.addUserToActivity(facebookId, activityId);
+		logger.info("addUserToActivity - END");
 	}
 
 	@RequestMapping(value = "/similarActivities", method = RequestMethod.POST)
 	public List<ActivityOutputDto> similarActivities(@RequestBody SimilarActivityInputDto inputDTO,
 																@RequestParam("minutes") long minutes) {
-		logger.info("similarActivities {} {}", inputDTO, minutes);
-		return activityCreationManager.similarActivities(inputDTO, minutes);
+		logger.info("similarActivities - START{} {}", inputDTO, minutes);
+		List<ActivityOutputDto> similarActivities = activityCreationManager.similarActivities(inputDTO, minutes);
+		logger.info("similarActivities - STOP{}", similarActivities);
+		return similarActivities;
 	}
 }
