@@ -12,6 +12,7 @@ import pl.lodz.p.it.naspontanaapp.entities.User;
 import pl.lodz.p.it.naspontanaapp.repository.ActivityRepository;
 import pl.lodz.p.it.naspontanaapp.repository.CategoryRepository;
 import pl.lodz.p.it.naspontanaapp.repository.UserRepository;
+import pl.lodz.p.it.naspontanaapp.utils.DateFormater;
 import pl.lodz.p.it.naspontanaapp.utils.DtoUtils;
 import pl.lodz.p.it.naspontanaapp.utils.TimeUtils;
 
@@ -49,7 +50,7 @@ public class ActivityCreationManager {
         Activity activity = new Activity();
         activity.setDescription(activityInputDto.getDescription());
         activity.setName(activityInputDto.getName());
-        activity.setStartDate(activityInputDto.getStartDate());
+        activity.setStartDate(DateFormater.convert(activityInputDto.getStartDate()));
         activity.setPublicationDate(LocalDateTime.now());
         activity.setCategory(category);
         activity.setPublished(false);
@@ -75,7 +76,7 @@ public class ActivityCreationManager {
     }
 
     public List<ActivityOutputDto> findSimilarActivities(SimilarActivityInputDto inputDTO) {
-    
+
     	List<String> friends = Arrays.asList(inputDTO.getFriends());
     	Map<Long, Activity> friendsActivities = new HashMap<Long, Activity>();
     	for (String friendId : friends) {
@@ -85,7 +86,7 @@ public class ActivityCreationManager {
 		}
     	List<Activity> friendsActivitiesList = new ArrayList<Activity>(friendsActivities.values());
         List<Activity> filteredActivities = friendsActivitiesList.stream()
-                .filter(a -> (TimeUtils.getMinutes(inputDTO.getStartDate(), a.getStartDate()) 
+                .filter(a -> (TimeUtils.getMinutes(DateFormater.convert(inputDTO.getStartDate()), a.getStartDate())
                 		<= inputDTO.getMinutesDiff()))
                 .filter(a -> inputDTO.getCategoryId() == a.getCategory().getId())
                 .collect(Collectors.toList());

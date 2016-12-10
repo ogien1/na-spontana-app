@@ -1,7 +1,5 @@
 package pl.lodz.p.it.naspontanaapp.domain;
 
-import org.joda.time.LocalDateTime;
-
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -10,7 +8,7 @@ import java.util.List;
  */
 public class ActivityOutputDto {
 
-    protected LocalDateTime startDate;
+    protected String startDate;
     protected long categoryId;
     protected String description;
     protected String name;
@@ -51,11 +49,11 @@ public class ActivityOutputDto {
         this.name = name;
     }
 
-    public LocalDateTime getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
