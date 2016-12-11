@@ -14,13 +14,10 @@ import pl.lodz.p.it.naspontanaapp.repository.CategoryRepository;
 import pl.lodz.p.it.naspontanaapp.repository.UserRepository;
 import pl.lodz.p.it.naspontanaapp.utils.DateFormater;
 import pl.lodz.p.it.naspontanaapp.utils.DtoUtils;
-import pl.lodz.p.it.naspontanaapp.utils.TimeUtils;
+import pl.lodz.p.it.naspontanaapp.utils.TimeYodaUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -84,7 +81,7 @@ public class ActivityCreationManager {
     	List<String> friendsIds = Arrays.asList(inputDTO.getFriends());
     	List<Activity> friendsActivities = activityListingManager.getActivities(friendsIds);
         List<Activity> filteredActivities = friendsActivities.stream()
-                .filter(a -> (TimeUtils.getMinutes(DateFormater.convert(inputDTO.getStartDate()), a.getStartDate())
+                .filter(a -> (TimeYodaUtils.getMinutes(DateFormater.convert(inputDTO.getStartDate()), a.getStartDate())
                 		<= inputDTO.getMinutesDiff()))
                 .filter(a -> inputDTO.getCategoryId() == a.getCategory().getId())
                 .collect(Collectors.toList());
