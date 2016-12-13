@@ -1,9 +1,10 @@
-package com.skaminski.naspontana;
+package com.skaminski.naspontana.api;
 
 import android.app.Activity;
 
 import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
+import com.skaminski.naspontana.other.TokenSave;
 import com.skaminski.naspontana.generated.ActivityFromApi;
 import com.skaminski.naspontana.generated.Datum;
 import com.skaminski.naspontana.generated.FiendsList;

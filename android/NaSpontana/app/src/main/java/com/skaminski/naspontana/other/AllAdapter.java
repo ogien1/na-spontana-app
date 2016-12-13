@@ -1,4 +1,4 @@
-package com.skaminski.naspontana;
+package com.skaminski.naspontana.other;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.skaminski.naspontana.R;
 import com.skaminski.naspontana.generated.ActivityFromApi;
 
 import java.util.List;

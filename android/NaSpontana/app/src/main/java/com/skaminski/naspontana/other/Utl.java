@@ -1,4 +1,4 @@
-package com.skaminski.naspontana;
+package com.skaminski.naspontana.other;
 
 import android.app.Activity;
 import android.util.Log;

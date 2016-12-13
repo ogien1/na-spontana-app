@@ -1,4 +1,4 @@
-package com.skaminski.naspontana;
+package com.skaminski.naspontana.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,9 @@ import com.facebook.HttpMethod;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.skaminski.naspontana.R;
+import com.skaminski.naspontana.other.TokenSave;
+import com.skaminski.naspontana.other.Utl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

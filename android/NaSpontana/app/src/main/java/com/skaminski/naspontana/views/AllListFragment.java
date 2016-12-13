@@ -1,4 +1,4 @@
-package com.skaminski.naspontana;
+package com.skaminski.naspontana.views;
 
 
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.skaminski.naspontana.other.AllAdapter;
+import com.skaminski.naspontana.api.ApiUtil;
+import com.skaminski.naspontana.R;
 import com.skaminski.naspontana.generated.ActivityFromApi;
 
 import java.util.List;

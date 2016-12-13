@@ -1,4 +1,4 @@
-package com.skaminski.naspontana;
+package com.skaminski.naspontana.api;
 
 import com.skaminski.naspontana.generated.ActivityFromApi;
 

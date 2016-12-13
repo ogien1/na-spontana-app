@@ -1,4 +1,4 @@
-package com.skaminski.naspontana;
+package com.skaminski.naspontana.views;
 
 
 import android.net.Uri;
@@ -17,6 +17,7 @@ import com.facebook.FacebookException;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.skaminski.naspontana.R;
 import com.skaminski.naspontana.facebook.FacebookUtils;
 
 import butterknife.BindView;

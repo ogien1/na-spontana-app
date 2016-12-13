@@ -1,4 +1,4 @@
-package com.skaminski.naspontana;
+package com.skaminski.naspontana.views;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+
+import com.skaminski.naspontana.R;
 
 import java.util.Calendar;
 
