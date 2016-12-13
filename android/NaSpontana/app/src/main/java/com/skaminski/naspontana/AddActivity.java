@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -65,6 +66,7 @@ public class AddActivity extends AppCompatActivity {
     public void data()
     {
         DialogFragment newFragment2 = new DatePickerFragment();
+        Log.d("e","e");
         newFragment2.show(getSupportFragmentManager(), "datePicker");
     }
 
