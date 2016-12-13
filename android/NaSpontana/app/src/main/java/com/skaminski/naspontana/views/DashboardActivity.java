@@ -37,8 +37,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.tabs)
     TabLayout tabs;
     @BindView(R.id.container)

@@ -12,9 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.skaminski.naspontana.R;
@@ -36,12 +36,13 @@ public class AddActivity extends AppCompatActivity {
     EditText etAktynosc;
     @BindView(R.id.et_opis)
     EditText etOpis;
-    @BindView(R.id.button_data)
-    Button buttonData;
-    @BindView(R.id.button_godzina)
-    Button buttonGodzina;
+
     @BindView(R.id.fab)
     FloatingActionButton fab;
+    @BindView(R.id.et_data)
+    TextView etData;
+    @BindView(R.id.et_godzina)
+    TextView etGodzina;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,20 +62,19 @@ public class AddActivity extends AppCompatActivity {
         });
 
 
-
     }
 
-    @OnClick(R.id.button_data)
-    public void data()
-    {
+
+
+    @OnClick(R.id.et_data)
+    public void data() {
         DialogFragment newFragment2 = new DatePickerFragment();
-        Log.d("e","e");
+        Log.d("e", "e");
         newFragment2.show(getSupportFragmentManager(), "datePicker");
     }
 
-    @OnClick(R.id.button_godzina)
-    public void godzina()
-    {
+    @OnClick(R.id.et_godzina)
+    public void godzina() {
         DialogFragment newFragment = new TimePickerFragment();
         newFragment.show(getSupportFragmentManager(), "timePicker");
     }
