@@ -18,7 +18,10 @@ import com.facebook.HttpMethod;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.gson.Gson;
 import com.skaminski.naspontana.R;
+import com.skaminski.naspontana.api.ApiUtil;
+import com.skaminski.naspontana.generated.FiendsList;
 import com.skaminski.naspontana.other.TokenSave;
 import com.skaminski.naspontana.other.Utl;
 
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                         response.getRawResponse();
                         TokenSave tokenSave = new TokenSave(MainActivity.this);
                         tokenSave.friendsList = response.getRawResponse();
+                        ApiUtil.friendsList = new Gson().fromJson(tokenSave.friendsList, FiendsList.class);
                         tokenSave.commit();
                         startActivity(new Intent(MainActivity.this.getApplicationContext() , DashboardActivity.class));
 

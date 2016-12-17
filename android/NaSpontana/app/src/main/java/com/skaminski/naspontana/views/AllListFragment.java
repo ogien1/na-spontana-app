@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.skaminski.naspontana.generated.Category;
 import com.skaminski.naspontana.other.AllAdapter;
 import com.skaminski.naspontana.api.ApiUtil;
 import com.skaminski.naspontana.R;
@@ -58,6 +60,20 @@ public class AllListFragment extends Fragment {
             @Override
             public void onFailure(Call<List<ActivityFromApi>> call, Throwable t) {
 
+            }
+        });
+
+
+        apiUtil.getCategories().enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                if(response.isSuccessful())
+                ApiUtil.categoryList  = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                Log.d("e","e");
             }
         });
         return view;

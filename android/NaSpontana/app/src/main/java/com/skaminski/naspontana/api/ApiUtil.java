@@ -1,9 +1,11 @@
 package com.skaminski.naspontana.api;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
+import com.skaminski.naspontana.generated.Category;
 import com.skaminski.naspontana.other.TokenSave;
 import com.skaminski.naspontana.generated.ActivityFromApi;
 import com.skaminski.naspontana.generated.Datum;
@@ -15,6 +17,8 @@ import java.util.List;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -25,7 +29,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiUtil {
 
     Api service;
-
+    public static List<Category> categoryList;
+    public static  FiendsList friendsList;
     public ApiUtil() {
         String url;
         Retrofit retrofit;
@@ -38,6 +43,8 @@ public class ApiUtil {
         retrofit = new Retrofit.Builder().baseUrl(url).client(httpClient.build()).addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(Api.class);
     }
+
+
 
     public Call<List<ActivityFromApi>> getList(Activity activity)
     {
@@ -61,5 +68,16 @@ public class ApiUtil {
         LoginResult loginResult= g.fromJson(tokenSave.json, LoginResult.class);
         return service.getMyList(loginResult.getAccessToken().getUserId());
     }
+
+    public Call<List<Category>> getCategories()
+    {
+        return service.getCategoryList();
+    }
+
+    public Api getService()
+    {
+        return service;
+    }
+
 
 }

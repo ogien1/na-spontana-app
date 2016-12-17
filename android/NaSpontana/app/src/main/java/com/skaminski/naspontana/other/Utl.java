@@ -5,12 +5,17 @@ import android.util.Log;
 
 import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
+import com.skaminski.naspontana.generated.Category;
+
+import java.util.List;
 
 /**
  * Created by skaminski on 09.12.2016.
  */
 
 public class Utl {
+
+
     public static void saveLoginResult(LoginResult loginResult, Activity activity)
     {
         Gson gson = new Gson();

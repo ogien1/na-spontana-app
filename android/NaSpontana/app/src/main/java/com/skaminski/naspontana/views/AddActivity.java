@@ -16,20 +16,36 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.skaminski.naspontana.R;
+import com.skaminski.naspontana.api.ApiUtil;
+import com.skaminski.naspontana.generated.ActivityToCheck;
+import com.skaminski.naspontana.generated.Category;
+import com.skaminski.naspontana.generated.Datum;
+import com.skaminski.naspontana.other.TokenSave;
+import com.skaminski.naspontana.other.Utl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.R.attr.onClick;
 
 public class AddActivity extends AppCompatActivity {
 
     String data;
     static String dzien = "";
     static String godzina = "";
+    static String id="";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.et_aktynosc)
@@ -43,6 +59,50 @@ public class AddActivity extends AppCompatActivity {
     TextView etData;
     @BindView(R.id.et_godzina)
     TextView etGodzina;
+    @BindView(R.id.et_typ)
+    TextView etTyp;
+
+    @OnClick(R.id.fab)
+    public void addAction()
+    {
+        if(!godzina.equals("")
+                && !id.equals("")
+                && !dzien.equals(""))
+        {
+
+            ActivityToCheck activityToCheck= new ActivityToCheck();
+            data = dzien+godzina;
+            activityToCheck.setCategoryId(id);
+            activityToCheck.setDescription(etOpis.getText().toString());
+            activityToCheck.setMinutesDiff("30");
+            activityToCheck.setStartDate(data);
+            activityToCheck.setName(etAktynosc.getText().toString());
+            List<String> friendsIds = new ArrayList<>();
+            for (Datum datum : ApiUtil.friendsList.getData()) {
+                friendsIds.add(datum.getId());
+            }
+            activityToCheck.setFriends(friendsIds);
+            activityToCheck.setFacebookId(Utl.getLoginResult(this).getAccessToken().getUserId());
+
+            ApiUtil api = new ApiUtil();
+            api.getService().addActivity(activityToCheck).enqueue(new Callback<Void>() {
+                //// TODO: 13.12.2016 zmienic typ zwracany 
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    Log.d("e" ,"e");
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    Log.d("e" ,"e");
+                }
+            });
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "Uzupelnij pola", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,25 +111,31 @@ public class AddActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-
     }
 
+    @OnClick(R.id.et_typ)
+    public void setType()
+    {
+        List<String> list = new ArrayList<>();
+        for (Category category : ApiUtil.categoryList) {
+            list.add(category.getName());
+        }
 
+        new MaterialDialog.Builder(this)
+                .title("Wybierz kategorie")
+                .items(list)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                        id =""+ApiUtil.categoryList.get(position).getId();
+                    }
+                })
+                .show();
+    }
 
     @OnClick(R.id.et_data)
     public void data() {
         DialogFragment newFragment2 = new DatePickerFragment();
-        Log.d("e", "e");
         newFragment2.show(getSupportFragmentManager(), "datePicker");
     }
 
@@ -94,7 +160,8 @@ public class AddActivity extends AppCompatActivity {
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            godzina = hourOfDay + ":" + minute;
+            godzina = hourOfDay + ":" + minute+":00";
+            //// TODO: 13.12.2016 dodac do pola  etGOdzina
         }
     }
 
@@ -116,6 +183,7 @@ public class AddActivity extends AppCompatActivity {
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             dzien = year + "-" + month + "-" + day + "T";
+            //// TODO: 13.12.2016 dodac do pola  etData
         }
     }
 }
