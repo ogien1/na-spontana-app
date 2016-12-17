@@ -7,13 +7,13 @@ import org.joda.time.LocalDateTime;
 public class TimeYodaUtils {
 
 	public static long getMinutes(LocalDateTime start, LocalDateTime end) {
-		return new Duration(start.toDateTime(DateTimeZone.UTC),
-				end.toDateTime(DateTimeZone.UTC)).toStandardMinutes().getMinutes();
+		return Math.abs(new Duration(start.toDateTime(DateTimeZone.UTC),
+				end.toDateTime(DateTimeZone.UTC)).toStandardMinutes().getMinutes());
 	}
 
 	public static long getSeconds(LocalDateTime start, LocalDateTime end) {
-		return new Duration(start.toDateTime(DateTimeZone.UTC),
-				end.toDateTime(DateTimeZone.UTC)).toStandardSeconds().getSeconds();
+		return Math.abs(new Duration(start.toDateTime(DateTimeZone.UTC),
+				end.toDateTime(DateTimeZone.UTC)).toStandardSeconds().getSeconds());
 	}
 
 }

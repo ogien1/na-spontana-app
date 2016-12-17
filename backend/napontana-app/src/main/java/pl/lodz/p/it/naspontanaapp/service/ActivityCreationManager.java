@@ -77,14 +77,24 @@ public class ActivityCreationManager {
     }
 
     public List<ActivityOutputDto> findSimilarActivities(SimilarActivityInputDto inputDTO) {
-
     	List<String> friendsIds = Arrays.asList(inputDTO.getFriends());
     	List<Activity> friendsActivities = activityListingManager.getActivities(friendsIds);
-        List<Activity> filteredActivities = friendsActivities.stream()
-                .filter(a -> (TimeYodaUtils.getMinutes(DateFormater.convert(inputDTO.getStartDate()), a.getStartDate())
-                		<= inputDTO.getMinutesDiff()))
-                .filter(a -> inputDTO.getCategoryId() == a.getCategory().getId())
-                .collect(Collectors.toList());
+
+    	List<Activity> filteredActivities = friendsActivities.stream()
+                .filter(a -> areSimilarActivities(inputDTO, a)).collect(Collectors.toList());
+
         return filteredActivities.stream().map(DtoUtils::fromActivity).collect(Collectors.toList());
     }
+
+    private boolean areSimilarActivities(SimilarActivityInputDto similarActivityInputDto, Activity activity) {
+        long minutes = TimeYodaUtils.getMinutes(DateFormater.convert(similarActivityInputDto.getStartDate()),
+                activity.getStartDate());
+
+        boolean isCorrectTimeDiff = minutes <= similarActivityInputDto.getMinutesDiff();
+        boolean isCorrectCategory = similarActivityInputDto.getCategoryId() == activity.getCategory().getId();
+
+        return isCorrectTimeDiff & isCorrectCategory;
+    }
+
+
 }
