@@ -1,4 +1,4 @@
-package pl.lodz.p.it.naspontanaapp;
+package pl.lodz.p.it.naspontanaapp.test;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class TimeYodaUtilsTest {
 		long startEndMinutes = TimeYodaUtils.getMinutes(end, start);
 
 		assertEquals(endStartMinutes, END_DATE_START_DATE_MINUTES_DIFF);
-		assertEquals(startEndMinutes, -END_DATE_START_DATE_MINUTES_DIFF);
+		assertEquals(startEndMinutes, END_DATE_START_DATE_MINUTES_DIFF);
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class TimeYodaUtilsTest {
 		long startEndSeconds = TimeYodaUtils.getSeconds(end, start);
 
 		assertEquals(endStartSeconds, END_DATE_START_DATE_SECONDS_DIFF);
-		assertEquals(startEndSeconds, -END_DATE_START_DATE_SECONDS_DIFF);
+		assertEquals(startEndSeconds, END_DATE_START_DATE_SECONDS_DIFF);
 	}
 
 }
