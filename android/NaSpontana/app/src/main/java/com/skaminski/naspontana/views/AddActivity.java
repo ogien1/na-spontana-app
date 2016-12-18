@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,8 +23,10 @@ import com.skaminski.naspontana.api.ApiUtil;
 import com.skaminski.naspontana.generated.ActivityToCheck;
 import com.skaminski.naspontana.generated.Category;
 import com.skaminski.naspontana.generated.Datum;
-import com.skaminski.naspontana.other.TokenSave;
 import com.skaminski.naspontana.other.Utl;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,14 +39,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.R.attr.onClick;
-
 public class AddActivity extends AppCompatActivity {
 
     String data;
     static String dzien = "";
     static String godzina = "";
-    static String id="";
+    static String id = "";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.et_aktynosc)
@@ -62,16 +61,20 @@ public class AddActivity extends AppCompatActivity {
     @BindView(R.id.et_typ)
     TextView etTyp;
 
-    @OnClick(R.id.fab)
-    public void addAction()
-    {
-        if(!godzina.equals("")
-                && !id.equals("")
-                && !dzien.equals(""))
-        {
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
 
-            ActivityToCheck activityToCheck= new ActivityToCheck();
-            data = dzien+godzina;
+    @OnClick(R.id.fab)
+    public void addAction() {
+        if (!godzina.equals("")
+                && !id.equals("")
+                && !dzien.equals("")) {
+
+            ActivityToCheck activityToCheck = new ActivityToCheck();
+            data = dzien + godzina;
             activityToCheck.setCategoryId(id);
             activityToCheck.setDescription(etOpis.getText().toString());
             activityToCheck.setMinutesDiff("30");
@@ -89,17 +92,15 @@ public class AddActivity extends AppCompatActivity {
                 //// TODO: 13.12.2016 zmienic typ zwracany 
                 @Override
                 public void onResponse(Call<Void> call, Response<Void> response) {
-                    Log.d("e" ,"e");
+                    Log.d("e", "e");
                 }
 
                 @Override
                 public void onFailure(Call<Void> call, Throwable t) {
-                    Log.d("e" ,"e");
+                    Log.d("e", "e");
                 }
             });
-        }
-        else
-        {
+        } else {
             Toast.makeText(getApplicationContext(), "Uzupelnij pola", Toast.LENGTH_SHORT).show();
         }
     }
@@ -111,11 +112,12 @@ public class AddActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        EventBus.getDefault().register(this);
+
     }
 
     @OnClick(R.id.et_typ)
-    public void setType()
-    {
+    public void setType() {
         List<String> list = new ArrayList<>();
         for (Category category : ApiUtil.categoryList) {
             list.add(category.getName());
@@ -127,7 +129,8 @@ public class AddActivity extends AppCompatActivity {
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                        id =""+ApiUtil.categoryList.get(position).getId();
+                        id = "" + ApiUtil.categoryList.get(position).getId();
+                        EventBus.getDefault().post("u");
                     }
                 })
                 .show();
@@ -137,6 +140,7 @@ public class AddActivity extends AppCompatActivity {
     public void data() {
         DialogFragment newFragment2 = new DatePickerFragment();
         newFragment2.show(getSupportFragmentManager(), "datePicker");
+        EventBus.getDefault().post("u");
     }
 
     @OnClick(R.id.et_godzina)
@@ -160,7 +164,8 @@ public class AddActivity extends AppCompatActivity {
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            godzina = hourOfDay + ":" + minute+":00";
+            godzina = hourOfDay + ":" + minute + ":00";
+            EventBus.getDefault().post("u");
             //// TODO: 13.12.2016 dodac do pola  etGOdzina
         }
     }
@@ -183,7 +188,22 @@ public class AddActivity extends AppCompatActivity {
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             dzien = year + "-" + month + "-" + day + "T";
+            EventBus.getDefault().post("u");
             //// TODO: 13.12.2016 dodac do pola  etData
         }
+    }
+
+    @Subscribe
+    public void update(String msg) {
+        try {
+            for (Category category : ApiUtil.categoryList) {
+                if (category.getId() == Integer.parseInt(id))
+                    etTyp.setText(category.getName());
+            }
+        } catch (Throwable e) {
+        }
+
+        etData.setText(dzien);
+        etGodzina.setText(godzina);
     }
 }
