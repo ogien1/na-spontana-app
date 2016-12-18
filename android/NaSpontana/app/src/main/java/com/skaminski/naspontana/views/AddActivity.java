@@ -88,7 +88,7 @@ public class AddActivity extends AppCompatActivity {
             activityToCheck.setFacebookId(Utl.getLoginResult(this).getAccessToken().getUserId());
 
             ApiUtil api = new ApiUtil();
-            api.getService().addActivity(activityToCheck).enqueue(new Callback<Void>() {
+            api.getService().checkActivity(activityToCheck).enqueue(new Callback<Void>() {
                 //// TODO: 13.12.2016 zmienic typ zwracany 
                 @Override
                 public void onResponse(Call<Void> call, Response<Void> response) {

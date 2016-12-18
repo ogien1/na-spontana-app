@@ -28,8 +28,19 @@ public class ActivityFromApi {
     @SerializedName("category")
     @Expose
         private long category;
+    @SerializedName("activityId")
+    @Expose
+    private String activityId;
 
-        public List<String> getParticipantsID() {
+    public String getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(String activityId) {
+        this.activityId = activityId;
+    }
+
+    public List<String> getParticipantsID() {
             return this.participantsID;
         }
 

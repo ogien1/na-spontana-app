@@ -38,4 +38,9 @@ public interface Api {
     @POST("activity/addActivity")
     Call<Void> addActivity(
             @Body ActivityToCheck activityToCheck);
+
+    @POST("activity/addUserToActivity")
+    Call<Void> addUserToActivity(
+        @Query("facebookId") String facebookId,
+        @Query("activityId") String activityId);
 }

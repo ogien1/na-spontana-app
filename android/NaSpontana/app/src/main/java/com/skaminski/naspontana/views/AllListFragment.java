@@ -51,7 +51,7 @@ public class AllListFragment extends Fragment {
             public void onResponse(Call<List<ActivityFromApi>> call, Response<List<ActivityFromApi>> response) {
                 if(response.isSuccessful())
                 {
-                    AllAdapter cameraAdapter = new AllAdapter(getContext(), response.body(), getActivity());
+                    AllAdapter cameraAdapter = new AllAdapter(getContext(), response.body(), getActivity(), true);
                     recycleViewAll.setAdapter(cameraAdapter);
                     recycleViewAll.setLayoutManager(new LinearLayoutManager(getContext()));
                 }
