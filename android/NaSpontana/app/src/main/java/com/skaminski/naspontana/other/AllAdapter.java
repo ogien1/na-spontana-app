@@ -44,6 +44,7 @@ public class AllAdapter extends RecyclerView.Adapter<AllAdapter.ViewHolder> {
         final ActivityFromApi activityFromApi = thingList.get(position);
         holder.textViewGoscie.setText(activityFromApi.descToString(activity));
         holder.textViewData.setText(activityFromApi.getStartDate());
+        holder.textViewName.setText(activityFromApi.getName());
         if(clickeable)
         {
             holder.linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +102,7 @@ public class AllAdapter extends RecyclerView.Adapter<AllAdapter.ViewHolder> {
         //        CircleImageView imageViewIcon;
         TextView textViewData;
         TextView textViewGoscie;
+        TextView textViewName;
         LinearLayout linearLayout;
         Activity activity;
         List<ActivityFromApi> thingList;
@@ -109,6 +111,7 @@ public class AllAdapter extends RecyclerView.Adapter<AllAdapter.ViewHolder> {
             super(itemView);
             textViewData = (TextView) itemView.findViewById(R.id.recycle_view_time);
             textViewGoscie= (TextView)  itemView.findViewById(R.id.recycle_view_guests);
+            textViewName = (TextView)  itemView.findViewById(R.id.recycle_view_name);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linear_list);
             this.thingList = thingList;
             this.activity = activity;
