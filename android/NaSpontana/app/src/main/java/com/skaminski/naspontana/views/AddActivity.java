@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -17,9 +18,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.skaminski.naspontana.R;
 import com.skaminski.naspontana.api.ApiUtil;
+import com.skaminski.naspontana.generated.ActivityFromApi;
 import com.skaminski.naspontana.generated.ActivityToCheck;
 import com.skaminski.naspontana.generated.Category;
 import com.skaminski.naspontana.generated.Datum;
@@ -73,7 +76,7 @@ public class AddActivity extends AppCompatActivity {
                 && !id.equals("")
                 && !dzien.equals("")) {
 
-            ActivityToCheck activityToCheck = new ActivityToCheck();
+            final ActivityToCheck activityToCheck = new ActivityToCheck();
             data = dzien + godzina;
             activityToCheck.setCategoryId(id);
             activityToCheck.setDescription(etOpis.getText().toString());
@@ -87,17 +90,56 @@ public class AddActivity extends AppCompatActivity {
             activityToCheck.setFriends(friendsIds);
             activityToCheck.setFacebookId(Utl.getLoginResult(this).getAccessToken().getUserId());
 
-            ApiUtil api = new ApiUtil();
-            api.getService().checkActivity(activityToCheck).enqueue(new Callback<Void>() {
-                //// TODO: 13.12.2016 zmienic typ zwracany 
+            final ApiUtil api = new ApiUtil();
+            api.getService().checkActivity(activityToCheck).enqueue(new Callback<List<ActivityFromApi>>() {
+
                 @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    Log.d("e", "e");
+                public void onResponse(Call<List<ActivityFromApi>> call, Response<List<ActivityFromApi>> response) {
+                    if(response.body().isEmpty())
+                    {
+                        api.getService().addActivity(activityToCheck).enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if(response.isSuccessful())
+                                    Toast.makeText(AddActivity.this, "Dodano", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                    else
+                    {
+                        MaterialDialog dialog = new MaterialDialog.Builder(AddActivity.this)
+                                .content("Istnieje podobne wydarzenie. Na pewno chcesz dodac swoje?")
+                                .positiveText("tak")
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        api.getService().addActivity(activityToCheck).enqueue(new Callback<Void>() {
+                                            @Override
+                                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                                if(response.isSuccessful())
+                                                    Toast.makeText(AddActivity.this, "Dodano", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Void> call, Throwable t) {
+
+                                            }
+                                        });
+                                    }
+                                })
+                                .negativeText("nie")
+                                .show();
+                    }
                 }
 
                 @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Log.d("e", "e");
+                public void onFailure(Call<List<ActivityFromApi>> call, Throwable t) {
+
                 }
             });
         } else {
@@ -187,7 +229,8 @@ public class AddActivity extends AppCompatActivity {
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            dzien = year + "-" + month + "-" + day + "T";
+            int validMonth = month +1;
+            dzien = year + "-" + validMonth + "-" + day + "T";
             EventBus.getDefault().post("u");
             //// TODO: 13.12.2016 dodac do pola  etData
         }

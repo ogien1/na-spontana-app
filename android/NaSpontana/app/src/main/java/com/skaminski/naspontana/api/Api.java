@@ -32,7 +32,7 @@ public interface Api {
     Call<List<Category>> getCategoryList();
 
     @POST("activity/addSimilarActivity")
-    Call<Void> checkActivity(
+    Call<List<ActivityFromApi>> checkActivity(
             @Body ActivityToCheck activityToCheck);
 
     @POST("activity/addActivity")
