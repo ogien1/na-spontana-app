@@ -102,10 +102,13 @@ public class AddActivity extends AppCompatActivity {
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 if(response.isSuccessful())
                                     Toast.makeText(AddActivity.this, "Dodano", Toast.LENGTH_SHORT).show();
+                                finish();
                             }
 
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
+                                Toast.makeText(AddActivity.this, "blad", Toast.LENGTH_SHORT).show();
+                                finish();
 
                             }
                         });
@@ -123,10 +126,13 @@ public class AddActivity extends AppCompatActivity {
                                             public void onResponse(Call<Void> call, Response<Void> response) {
                                                 if(response.isSuccessful())
                                                     Toast.makeText(AddActivity.this, "Dodano", Toast.LENGTH_SHORT).show();
+                                                finish();
                                             }
 
                                             @Override
                                             public void onFailure(Call<Void> call, Throwable t) {
+                                                Toast.makeText(AddActivity.this, "Blad", Toast.LENGTH_SHORT).show();
+                                                finish();
 
                                             }
                                         });
