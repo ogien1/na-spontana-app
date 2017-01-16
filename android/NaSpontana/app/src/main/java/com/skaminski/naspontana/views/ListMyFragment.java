@@ -2,6 +2,7 @@ package com.skaminski.naspontana.views;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +44,16 @@ public class ListMyFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_my, container, false);
         ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateData();
+    }
+
+    private void updateData() {
         ApiUtil apiUtil = new ApiUtil();
         apiUtil.getMyList(this.getActivity()).enqueue(new Callback<List<ActivityFromApi>>() {
             @Override
@@ -60,7 +71,6 @@ public class ListMyFragment extends Fragment {
 
             }
         });
-        return view;
     }
 
     @Override

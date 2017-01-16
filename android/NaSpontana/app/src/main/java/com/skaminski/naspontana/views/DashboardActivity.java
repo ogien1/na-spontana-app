@@ -68,12 +68,17 @@ public class DashboardActivity extends AppCompatActivity {
         Gson g = new Gson();
         FiendsList f = g.fromJson(tokenSave.friendsList, FiendsList.class);
         f.getData();
-        downloadListOfActivity();
 
         container.setOffscreenPageLimit(10);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         container.setAdapter(mSectionsPagerAdapter);
         tabs.setupWithViewPager(container);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        downloadListOfActivity();
     }
 
     void downloadListOfActivity() {
