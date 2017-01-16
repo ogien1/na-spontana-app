@@ -25,13 +25,6 @@
         android:id="@+id/recycle_view_time" />
 
     <TextView
-        android:text="GOSCIE"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView10"
-        android:textAlignment="center" />
-
-    <TextView
         android:text="Lista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
