@@ -80,7 +80,7 @@ public class AddActivity extends AppCompatActivity {
             data = dzien + godzina;
             activityToCheck.setCategoryId(id);
             activityToCheck.setDescription(etOpis.getText().toString());
-            activityToCheck.setMinutesDiff("30");
+            activityToCheck.setMinutesDiff(String.valueOf(24*60));
             activityToCheck.setStartDate(data);
             activityToCheck.setName(etAktynosc.getText().toString());
             List<String> friendsIds = new ArrayList<>();
