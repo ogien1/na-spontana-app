@@ -41,6 +41,7 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.github.brunodles:AndroidSimplePreferences:0.3.1'
     compile 'com.facebook.android:facebook-android-sdk:4.10.0'
+    compile 'com.google.guava:guava:20.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.afollestad.material-dialogs:core:0.9.1.0'

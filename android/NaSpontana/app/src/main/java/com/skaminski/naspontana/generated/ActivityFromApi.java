@@ -2,9 +2,12 @@ package com.skaminski.naspontana.generated;
 
 import android.app.Activity;
 
+import com.google.common.base.Joiner;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.skaminski.naspontana.api.ApiUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,26 +47,16 @@ public class ActivityFromApi {
             return this.participantsID;
         }
 
-    public String descToString(Activity activity)
+    public String getGuestsListString(Activity activity)
     {
-        return "test";
-//        TokenSave tokenSave = new TokenSave(activity);
-//        tokenSave.reload();
-//        Gson g = new Gson();
-//        List<Datum> list;
-//        list = g.fromJson(tokenSave.friendsList, FiendsList.class).getData();
-//
-//
-//        String ret="";
-//        for (String s : this.participantsID) {
-//            for (Datum datum : list) {
-//                if(s.equals(datum.getId()))
-//                {
-//                    ret=ret+datum.getName() + "\n";
-//                }
-//            }
-//        }
-//    return ret;
+        List<String> friendsAtendees = new ArrayList<>();
+        for (Datum friend : ApiUtil.friendsList.getData()) {
+            if(participantsID.contains(friend.getId())) {
+                friendsAtendees.add(friend.getName());
+            }
+        }
+        String friendsJoined = friendsAtendees.isEmpty() ? "" : " w tym " + Joiner.on(", ").join(friendsAtendees);
+        return participantsID.size() + 1 + " uczestnik(ów)"  + friendsJoined;
     }
 
         public void setParticipantsID(List<String> participantsID) {

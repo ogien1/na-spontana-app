@@ -42,7 +42,7 @@ public class AllAdapter extends RecyclerView.Adapter<AllAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ActivityFromApi activityFromApi = thingList.get(position);
-        holder.textViewGoscie.setText(activityFromApi.descToString(activity));
+        holder.textViewGoscie.setText(activityFromApi.getGuestsListString(activity));
         holder.textViewData.setText(activityFromApi.getStartDate());
         holder.textViewName.setText(activityFromApi.getName());
         if(clickeable)
