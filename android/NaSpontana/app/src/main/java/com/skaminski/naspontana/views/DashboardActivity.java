@@ -130,8 +130,8 @@ public class DashboardActivity extends AppCompatActivity {
                     return new AllListFragment();
                 case 1:
                     return new ListMyFragment();
-                case 2:
-                    return new TestFragment();
+//                case 2:
+//                    return new TestFragment();
             }
 
             return null;
@@ -140,7 +140,7 @@ public class DashboardActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -150,8 +150,8 @@ public class DashboardActivity extends AppCompatActivity {
                     return "Znajomi";
                 case 1:
                     return "Ja";
-                case 2:
-                    return "Test";
+//                case 2:
+//                    return "Test";
 
             }
             return null;
