@@ -29,10 +29,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.DashboardActivity"
-            android:label="@string/title_activity_dashboard" />
+            android:label="Na spontana!" />
         <activity
             android:name=".views.AddActivity"
-            android:label="@string/title_activity_add"
+            android:label="Dodaj aktywność"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
