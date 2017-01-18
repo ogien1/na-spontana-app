@@ -20,8 +20,14 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.share.Sharer;
+import com.facebook.share.widget.ShareDialog;
 import com.skaminski.naspontana.R;
 import com.skaminski.naspontana.api.ApiUtil;
+import com.skaminski.naspontana.facebook.FacebookUtils;
 import com.skaminski.naspontana.generated.ActivityFromApi;
 import com.skaminski.naspontana.generated.ActivityToCheck;
 import com.skaminski.naspontana.generated.Category;
@@ -63,7 +69,8 @@ public class AddActivity extends AppCompatActivity {
     TextView etGodzina;
     @BindView(R.id.et_typ)
     TextView etTyp;
-
+    ShareDialog shareDialog;
+    ActivityToCheck activityToCheck;
     @Override
     protected void onPause() {
         super.onPause();
@@ -76,7 +83,7 @@ public class AddActivity extends AppCompatActivity {
                 && !id.equals("")
                 && !dzien.equals("")) {
 
-            final ActivityToCheck activityToCheck = new ActivityToCheck();
+            activityToCheck = new ActivityToCheck();
             data = dzien + godzina;
             activityToCheck.setCategoryId(id);
             activityToCheck.setDescription(etOpis.getText().toString());
@@ -100,9 +107,10 @@ public class AddActivity extends AppCompatActivity {
                         api.getService().addActivity(activityToCheck).enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
-                                if(response.isSuccessful())
+                                if(response.isSuccessful()) {
+                                    postOnWall();
                                     Toast.makeText(AddActivity.this, "Dodano", Toast.LENGTH_SHORT).show();
-                                finish();
+                                }finish();
                             }
 
                             @Override
@@ -124,9 +132,10 @@ public class AddActivity extends AppCompatActivity {
                                         api.getService().addActivity(activityToCheck).enqueue(new Callback<Void>() {
                                             @Override
                                             public void onResponse(Call<Void> call, Response<Void> response) {
-                                                if(response.isSuccessful())
+                                                if(response.isSuccessful()) {
+                                                    postOnWall();
                                                     Toast.makeText(AddActivity.this, "Dodano", Toast.LENGTH_SHORT).show();
-                                                finish();
+                                                }finish();
                                             }
 
                                             @Override
@@ -161,6 +170,29 @@ public class AddActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         EventBus.getDefault().register(this);
+
+
+        shareDialog = new ShareDialog(this);
+        CallbackManager callbackManager = CallbackManager.Factory.create();
+        shareDialog.registerCallback(callbackManager, new
+                FacebookCallback<Sharer.Result>() {
+                    @Override
+                    public void onSuccess(Sharer.Result result) {}
+
+                    @Override
+                    public void onCancel() {}
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Log.e("Facebook", error.getMessage());
+                    }
+                });
+
+    }
+
+    public void postOnWall()
+    {
+        FacebookUtils.showPostOnWall(shareDialog, activityToCheck.getName(), activityToCheck.getStartDate());
 
     }
 
