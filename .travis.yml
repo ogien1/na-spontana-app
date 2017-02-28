@@ -11,3 +11,6 @@ postgres:
   database: spontandb
   username: spontanu
   password: spontap
+
+before-script:
+  - psql -c 'create schema spontan;' -U postgres -d spontandb
