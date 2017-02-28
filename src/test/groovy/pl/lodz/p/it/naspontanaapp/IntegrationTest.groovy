@@ -51,7 +51,9 @@ class IntegrationTest extends Specification {
 	def "Should get activity"() {
 		given:
 			def category = categoryRepository.save(createCategory())
-			def activity = activityRepository.save(createActivity(category: category))
+			def owner = userRepository.save(createUser())
+			def activity1 = createActivity(owner:owner,category: category)
+			def activity = activityRepository.save(activity1)
 			def expectedActivity = DtoUtils.fromActivity(activity)
 		when:
 			def response = mvc.perform(get("/activity/details/$activity.id")).andReturn().response
@@ -90,8 +92,8 @@ class IntegrationTest extends Specification {
 	def "Should add user to activity"() {
 		given:
 			def category = categoryRepository.save(createCategory())
-			def activity = activityRepository.save(createActivity(category: category))
 			def user = userRepository.save(createUser())
+			def activity = activityRepository.save(createActivity(owner:user,category: category))
 		when:
 			def response = mvc.perform(post("/activity/addUserToActivity")
 					.param("facebookId", user.facebookId)
@@ -108,9 +110,9 @@ class IntegrationTest extends Specification {
 			def category = categoryRepository.save(createCategory())
 			def mark = userRepository.save(createUser(facebookId: "122", name: "Mark"))
 			def john = userRepository.save(createUser(facebookId: "123", name: "John"))
-			def mActivity = createActivity(category: category)
+			def mActivity = createActivity(owner:mark,category: category)
 			mActivity.setUsers([mark])
-			def jActivity = createActivity(category: category)
+			def jActivity = createActivity(owner:john,category: category)
 			jActivity.setUsers([john])
 			def markActivity = activityRepository.save(mActivity)
 			def johnActivity = activityRepository.save(jActivity)
@@ -132,8 +134,8 @@ class IntegrationTest extends Specification {
 		given:
 			def category = categoryRepository.save(createCategory())
 			def user = userRepository.save(createUser())
-			def activity1 = activityRepository.save(createActivity(category: category, users: [user]))
-			def activity2 = activityRepository.save(createActivity(category: category, users: [user]))
+			def activity1 = activityRepository.save(createActivity(owner:user,category: category, users: [user]))
+			def activity2 = activityRepository.save(createActivity(owner:user,category: category, users: [user]))
 			user.setActivities([activity1,activity2])
 			def expectedBody = [
 					DtoUtils.fromActivity(activity1),
@@ -218,6 +220,7 @@ class IntegrationTest extends Specification {
 								 publicationDate: LocalDateTime.parse("2015-06-13T15:25:33",DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss")),
 								 published      : true,
 								 category       : createCategory(),
+								 owner : createUser(),
 								 users          : []]
 		new Activity(defaultProperties << properties)
 	}
