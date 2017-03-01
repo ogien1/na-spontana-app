@@ -1,12 +1,12 @@
 package pl.lodz.p.it.naspontanaapp.utils;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto;
 import pl.lodz.p.it.naspontanaapp.domain.CategoryOutputDto;
 import pl.lodz.p.it.naspontanaapp.entities.Activity;
 import pl.lodz.p.it.naspontanaapp.entities.Category;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by piotr on 30.11.16.

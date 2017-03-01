@@ -1,5 +1,7 @@
 package pl.lodz.p.it.naspontanaapp.webservice;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -12,11 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.lodz.p.it.naspontanaapp.domain.ActivityInputDto;
-import pl.lodz.p.it.naspontanaapp.domain.SimilarActivityInputDto;
 import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto;
+import pl.lodz.p.it.naspontanaapp.domain.SimilarActivityInputDto;
 import pl.lodz.p.it.naspontanaapp.service.ActivityCreationManager;
-
-import java.util.List;
 
 /**
  * Created by 'Jakub Dziworski' on 30.11.16

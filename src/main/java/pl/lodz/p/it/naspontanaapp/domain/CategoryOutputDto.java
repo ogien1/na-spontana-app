@@ -4,8 +4,11 @@ package pl.lodz.p.it.naspontanaapp.domain;
  * Created by 'Jakub Dziworski' on 10.12.16
  */
 public class CategoryOutputDto {
+	
     Long id;
+    
     String name;
+    
     String verb;
 
     public Long getId() {

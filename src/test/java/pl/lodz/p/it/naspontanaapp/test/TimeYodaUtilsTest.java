@@ -1,10 +1,11 @@
 package pl.lodz.p.it.naspontanaapp.test;
 
+import static org.junit.Assert.assertEquals;
+
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
-import pl.lodz.p.it.naspontanaapp.utils.TimeYodaUtils;
 
-import static org.junit.Assert.assertEquals;
+import pl.lodz.p.it.naspontanaapp.utils.TimeYodaUtils;
 
 public class TimeYodaUtilsTest {
 

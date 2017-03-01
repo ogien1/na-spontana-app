@@ -1,7 +1,8 @@
 package pl.lodz.p.it.naspontanaapp.domain;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by piotr on 30.11.16.
@@ -9,10 +10,15 @@ import java.util.List;
 public class ActivityOutputDto {
 
     protected String startDate;
+    
     protected long categoryId;
+    
     protected String description;
+    
     protected String name;
+    
     protected String ownerFbId;
+    
     @NotNull
     private List<String> participantsID;
 

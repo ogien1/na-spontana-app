@@ -1,30 +1,25 @@
 package pl.lodz.p.it.naspontanaapp.test;
 
-import org.junit.Before;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
 import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto;
 import pl.lodz.p.it.naspontanaapp.domain.SimilarActivityInputDto;
 import pl.lodz.p.it.naspontanaapp.entities.Activity;
 import pl.lodz.p.it.naspontanaapp.entities.Category;
 import pl.lodz.p.it.naspontanaapp.entities.User;
-import pl.lodz.p.it.naspontanaapp.service.ActivityCreationManager;
-import pl.lodz.p.it.naspontanaapp.service.ActivityListingManager;
+import pl.lodz.p.it.naspontanaapp.service.ActivityCreationManagerImpl;
+import pl.lodz.p.it.naspontanaapp.service.ActivityListingManagerImpl;
 import pl.lodz.p.it.naspontanaapp.utils.DateFormater;
-import pl.lodz.p.it.naspontanaapp.utils.TimeYodaUtils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ActivityCreationManagerTest {
@@ -46,10 +41,10 @@ public class ActivityCreationManagerTest {
     private static final String START_DATE5 = "2016-12-18T13:09:00";
 
     @Mock
-    private ActivityListingManager activityListingManager;
+    private ActivityListingManagerImpl activityListingManager;
 
     @InjectMocks
-    private ActivityCreationManager activityCreationManager;
+    private ActivityCreationManagerImpl activityCreationManager;
 
     @Test
     public void shouldNotFindSimilarActivities() {

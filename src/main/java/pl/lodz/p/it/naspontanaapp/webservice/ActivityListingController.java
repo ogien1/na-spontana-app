@@ -1,5 +1,7 @@
 package pl.lodz.p.it.naspontanaapp.webservice;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,8 +20,6 @@ import pl.lodz.p.it.naspontanaapp.domain.CategoryOutputDto;
 import pl.lodz.p.it.naspontanaapp.entities.Category;
 import pl.lodz.p.it.naspontanaapp.service.ActivityListingManager;
 import pl.lodz.p.it.naspontanaapp.utils.DtoUtils;
-
-import static java.util.stream.Collectors.*;
 
 /**
  * Created by 'Jakub Dziworski' on 30.11.16

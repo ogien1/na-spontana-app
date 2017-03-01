@@ -8,6 +8,7 @@ import java.util.Arrays;
 public class SimilarActivityInputDto extends ActivityInputDto{
 
 	private long minutesDiff;
+	
 	private String[] friends;
 
 	public long getMinutesDiff() {

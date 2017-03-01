@@ -13,12 +13,11 @@ import pl.lodz.p.it.naspontanaapp.logger.RequestLogger;
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-    @Autowired
-    private RequestLogger requestLogger;
+	@Autowired
+	private RequestLogger requestLogger;
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry)
-    {
-        registry.addInterceptor(requestLogger);
-    }
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(requestLogger);
+	}
 }
