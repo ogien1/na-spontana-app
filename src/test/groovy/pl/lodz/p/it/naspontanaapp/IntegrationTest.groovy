@@ -19,6 +19,7 @@ import pl.lodz.p.it.naspontanaapp.entities.User
 import pl.lodz.p.it.naspontanaapp.repository.ActivityRepository
 import pl.lodz.p.it.naspontanaapp.repository.CategoryRepository
 import pl.lodz.p.it.naspontanaapp.repository.UserRepository
+import pl.lodz.p.it.naspontanaapp.utils.DateFormater
 import pl.lodz.p.it.naspontanaapp.utils.DtoUtils
 import spock.lang.Ignore
 import spock.lang.Specification
@@ -170,29 +171,36 @@ class IntegrationTest extends Specification {
 			expectedResult == objectMapper.readValue(response.contentAsString,CategoryOutputDto[]).toList()
 	}
 
-	@Ignore("To jeszce niestety nie działa. Możesz piotrek odpalić i zobaczysz co jest nie tak na diffie")
 	def "Should get similar activities"() {
 		given:
 			def category = categoryRepository.save(createCategory())
-			def activity1 = activityRepository.save(createActivity(startDate: new LocalDateTime(100000),category:category))
-			def activity2 = activityRepository.save(createActivity(startDate: new LocalDateTime(100000).minusHours(5),category:category))
-			def activity3 = activityRepository.save(createActivity(startDate: new LocalDateTime(100000).plusHours(20),category:category))
-			def activity4 = activityRepository.save(createActivity(startDate: new LocalDateTime(100000).plusHours(500),category:category))
-			def dtoJson = """{
-					"start": ${activity1.startDate.toDate().getTime()}
+			def me = userRepository.save(createUser(facebookId: 1))
+			def mark = userRepository.save(createUser(facebookId: 2))
+			def john = userRepository.save(createUser(facebookId: 3))
+			def andrew = userRepository.save(createUser(facebookId: 4))
+			def myActivity = activityRepository.save(createActivity(startDate: new LocalDateTime(100000),category:category,owner:me))
+			def markActivity = activityRepository.save(createActivity(startDate: new LocalDateTime(100000).plusHours(20),category:category,owner:mark))
+			def johnActivity = activityRepository.save(createActivity(startDate: new LocalDateTime(100000).plusHours(15),category:category,owner:john))
+			def andrewActivity = activityRepository.save(createActivity(startDate: new LocalDateTime(100000).plusHours(25),category:category,owner:andrew))
+		def dtoJson = """{
+					"startDate": "${DateFormater.convert(new LocalDateTime(100000))}",
+					"categoryId" : ${myActivity.category.id},
+					"description" : "somedescr",
+					"name" : "lalal",
+					"facebookId" : ${me.facebookId},
+					"minutesDiff" : ${24*60},
+					"friends" : ["${john.facebookId}","${andrew.facebookId}"]
 					}
 			""".stripIndent()
 		when:
-			def response = mvc.perform(post("/activity/similarActivities")
-					.param("minutes", (24 * 60).toString())
+			def response = mvc.perform(post("/activity/addSimilarActivity")
 					.contentType(MediaType.APPLICATION_JSON)
 					.content(dtoJson))
 					.andReturn().response
 		then:
 			response.status == 200
 			def expectedBody = [
-					DtoUtils.fromActivity(activity2),
-					DtoUtils.fromActivity(activity3),
+					DtoUtils.fromActivity(johnActivity),
 			]
 			def actualBody = objectMapper.readValue(response.contentAsString, ActivityOutputDto[]).toList()
 			actualBody == expectedBody
@@ -216,11 +224,11 @@ class IntegrationTest extends Specification {
 	def createActivity(Map properties = [:]) {
 		def defaultProperties = [name           : "Aktywnosc",
 								 description    : "AktywnoscDesc",
-								 startDate      : LocalDateTime.parse("2015-06-14T15:25:33",DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss")),
-								 publicationDate: LocalDateTime.parse("2015-06-13T15:25:33",DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss")),
+								 startDate      : LocalDateTime.parse("2015-06-14T15:25:33", DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss")),
+								 publicationDate: LocalDateTime.parse("2015-06-13T15:25:33", DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss")),
 								 published      : true,
 								 category       : createCategory(),
-								 owner : createUser(),
+								 owner          : createUser(),
 								 users          : []]
 		new Activity(defaultProperties << properties)
 	}
