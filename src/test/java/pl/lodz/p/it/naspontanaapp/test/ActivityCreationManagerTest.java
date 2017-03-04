@@ -76,13 +76,12 @@ public class ActivityCreationManagerTest {
 
     private SimilarActivityInputDto createSimilarActivityInputDto(String startDate, long categoryId, long minutesDiff,
                                                                   String[] facebookIds) {
-        SimilarActivityInputDto similarActivityInputDto = new SimilarActivityInputDto();
-        similarActivityInputDto.setStartDate(startDate);
-        similarActivityInputDto.setCategoryId(categoryId);
-        similarActivityInputDto.setMinutesDiff(minutesDiff);
-        similarActivityInputDto.setFriends(facebookIds);
-
-        return similarActivityInputDto;
+        return SimilarActivityInputDto.builder()
+            .startDate(startDate)
+            .categoryId(categoryId)
+            .minutesDiff(minutesDiff)
+            .friends(facebookIds)
+            .build();
     }
 
     private Activity createActivity(String startDate, long categoryId) {

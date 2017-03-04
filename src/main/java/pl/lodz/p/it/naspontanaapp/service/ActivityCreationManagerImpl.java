@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import pl.lodz.p.it.naspontanaapp.domain.ActivityInputDto;
 import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto;
+import pl.lodz.p.it.naspontanaapp.domain.BaseActivityInputDto;
 import pl.lodz.p.it.naspontanaapp.domain.SimilarActivityInputDto;
 import pl.lodz.p.it.naspontanaapp.entities.Activity;
 import pl.lodz.p.it.naspontanaapp.entities.Category;
@@ -39,11 +40,12 @@ public class ActivityCreationManagerImpl implements ActivityCreationManager {
 	@Autowired
 	private ActivityListingManagerImpl activityListingManager;
 
-	public Long addActivity(ActivityInputDto activityInputDto) {
+	@Override
+	public Long addActivity(BaseActivityInputDto activityInputDto) {
 		Category category = categoryRepository.findOne((activityInputDto.getCategoryId()));
 		User user = userRepository.findUserByFacebookId(activityInputDto.getFacebookId());
 		if (user == null) {
-			user = createNewUser(activityInputDto);
+			user = createNewUser(activityInputDto.getFacebookId());
 		}
 
 		Activity activity = new Activity();
@@ -58,8 +60,7 @@ public class ActivityCreationManagerImpl implements ActivityCreationManager {
 		return activityRepository.save(activity).getId();
 	}
 
-	private User createNewUser(ActivityInputDto activityInputDto) {
-		String facebookId = activityInputDto.getFacebookId();
+	private User createNewUser(String facebookId) {
 		User user = new User();
 		user.setName("");
 		user.setLastname("");

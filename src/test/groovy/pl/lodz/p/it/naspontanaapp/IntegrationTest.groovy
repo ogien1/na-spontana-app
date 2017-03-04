@@ -158,9 +158,9 @@ class IntegrationTest extends Specification {
 			def category2 = categoryRepository.save(createCategory(name: "cat2"))
 			def category3 = categoryRepository.save(createCategory(name: "cat3"))
 			def expectedResult = [
-			        new CategoryOutputDto(id:category1.id,name:category1.name,verb: category1.verb),
-			        new CategoryOutputDto(id:category2.id,name:category2.name,verb: category2.verb),
-			        new CategoryOutputDto(id:category3.id,name:category3.name,verb: category3.verb),
+				new CategoryOutputDto(category1.id, category1.name, category1.verb),
+				new CategoryOutputDto(category2.id, category2.name, category2.verb),
+				new CategoryOutputDto(category3.id, category3.name, category3.verb),
 			]
 		when:
 			def response = mvc.perform(get("/activity/categories"))

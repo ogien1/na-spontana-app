@@ -4,11 +4,12 @@ import java.util.List;
 
 import pl.lodz.p.it.naspontanaapp.domain.ActivityInputDto;
 import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto;
+import pl.lodz.p.it.naspontanaapp.domain.BaseActivityInputDto;
 import pl.lodz.p.it.naspontanaapp.domain.SimilarActivityInputDto;
 
 public interface ActivityCreationManager {
 	
-	Long addActivity(ActivityInputDto activityInputDto);
+	Long addActivity(BaseActivityInputDto activityInputDto);
 
 	void addUserToActivity(String facebookId, long activityId);
 
