@@ -19,13 +19,13 @@ public class SimilarActivityInputDto implements BaseActivityInputDto{
 	
 	private String[] friends;
 
-    protected String startDate;
+    private String startDate;
 
-    protected long categoryId;
+    private long categoryId;
 
-    protected String description;
+    private String description;
 
-    protected String name;
+    private String name;
 
     @NotNull
     private String facebookId;
