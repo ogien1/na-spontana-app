@@ -6,11 +6,7 @@ jdk:
 services:
   - postgresql
 
-postgres:
-  adapter: postgresql
-  database: spontandb
-  username: spontanu
-  password: spontap
-
 before-script:
-  - psql -c 'create schema spontan;' -U postgres -d spontandb
+  - psql -c "CREATE USER spontanu_test WITH PASSWORD 'spontanp_test';" -U postgres
+  - psql -c 'CREATE DATABASE spontandb_test OWNER spontanu_test;' -U postgres
+  - psql -c 'create schema spontan_test;' -U postgres -d spontandb_test
