@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import pl.lodz.p.it.naspontanaapp.converting.ActivityDtoConverter;
+import pl.lodz.p.it.naspontanaapp.converting.CategoryDtoConverter;
 import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto;
 import pl.lodz.p.it.naspontanaapp.domain.CategoryOutputDto;
 import pl.lodz.p.it.naspontanaapp.entities.Category;
 import pl.lodz.p.it.naspontanaapp.service.ActivityListingManager;
-import pl.lodz.p.it.naspontanaapp.utils.DtoUtils;
 
 /**
  * Created by 'Jakub Dziworski' on 30.11.16
@@ -39,7 +40,7 @@ public class ActivityListingController {
 		logger.info("getFriendsActivities - START {}", Arrays.asList(friends));
 		List<ActivityOutputDto> list = activityListingManager.getActivities(Arrays.asList(friends))
         .stream()
-        .map(DtoUtils::fromActivity)
+        .map(ActivityDtoConverter::toDto)
         .collect(toList());
 		logger.info("getFriendsActivities - STOP {}", list);
 		return list;
@@ -49,7 +50,7 @@ public class ActivityListingController {
 	public List<ActivityOutputDto> getUserActivities(@RequestParam("facebookId") String facebookId){
 		logger.info("getUserActivities - START {}", facebookId);
 		List<ActivityOutputDto> collect = activityListingManager.getUserActivities(facebookId)
-			.stream().map(DtoUtils::fromActivity).collect(toList());
+			.stream().map(ActivityDtoConverter::toDto).collect(toList());
 		logger.info("getUserActivities - STOP {}", collect);
 		return collect;
 	}
@@ -59,6 +60,6 @@ public class ActivityListingController {
 		logger.info("getCategories - START");
 		List<Category> categories = activityListingManager.getCategories();
 		logger.info("getCategories - STOP {}", categories);
-		return categories.stream().map(DtoUtils::categoryTocategoryOutputDto).collect(toList());
+		return categories.stream().map(CategoryDtoConverter::toDto).collect(toList());
 	}
 }

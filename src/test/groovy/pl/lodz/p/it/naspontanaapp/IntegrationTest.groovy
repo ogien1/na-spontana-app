@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.transaction.annotation.Transactional
+import pl.lodz.p.it.naspontanaapp.converting.ActivityDtoConverter
 import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto
 import pl.lodz.p.it.naspontanaapp.domain.CategoryOutputDto
 import pl.lodz.p.it.naspontanaapp.entities.Activity
@@ -20,8 +21,6 @@ import pl.lodz.p.it.naspontanaapp.repository.ActivityRepository
 import pl.lodz.p.it.naspontanaapp.repository.CategoryRepository
 import pl.lodz.p.it.naspontanaapp.repository.UserRepository
 import pl.lodz.p.it.naspontanaapp.utils.DateFormater
-import pl.lodz.p.it.naspontanaapp.utils.DtoUtils
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -55,7 +54,7 @@ class IntegrationTest extends Specification {
 			def owner = userRepository.save(createUser())
 			def activity1 = createActivity(owner:owner,category: category)
 			def activity = activityRepository.save(activity1)
-			def expectedActivity = DtoUtils.fromActivity(activity)
+			def expectedActivity = ActivityDtoConverter.toDto(activity)
 		when:
 			def response = mvc.perform(get("/activity/details/$activity.id")).andReturn().response
 		then:
@@ -125,8 +124,8 @@ class IntegrationTest extends Specification {
 		then:
 			response.status == 200
 			def expectedResult = [
-					DtoUtils.fromActivity(markActivity),
-					DtoUtils.fromActivity(johnActivity)
+					ActivityDtoConverter.toDto(markActivity),
+					ActivityDtoConverter.toDto(johnActivity)
 			]
 			expectedResult == objectMapper.readValue(response.contentAsString, ActivityOutputDto[]).toList()
 	}
@@ -139,8 +138,8 @@ class IntegrationTest extends Specification {
 			def activity2 = activityRepository.save(createActivity(owner:user,category: category, users: [user]))
 			user.setActivities([activity1,activity2])
 			def expectedBody = [
-					DtoUtils.fromActivity(activity1),
-					DtoUtils.fromActivity(activity2)
+					ActivityDtoConverter.toDto(activity1),
+					ActivityDtoConverter.toDto(activity2)
 			]
 		when:
 			def response = mvc.perform(get("/activity/userActivities")
@@ -200,7 +199,7 @@ class IntegrationTest extends Specification {
 		then:
 			response.status == 200
 			def expectedBody = [
-					DtoUtils.fromActivity(johnActivity),
+					ActivityDtoConverter.toDto(johnActivity),
 			]
 			def actualBody = objectMapper.readValue(response.contentAsString, ActivityOutputDto[]).toList()
 			actualBody == expectedBody

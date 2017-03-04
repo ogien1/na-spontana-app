@@ -1,14 +1,8 @@
 package pl.lodz.p.it.naspontanaapp.service;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import pl.lodz.p.it.naspontanaapp.domain.ActivityInputDto;
+import pl.lodz.p.it.naspontanaapp.converting.ActivityDtoConverter;
 import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto;
 import pl.lodz.p.it.naspontanaapp.domain.BaseActivityInputDto;
 import pl.lodz.p.it.naspontanaapp.domain.SimilarActivityInputDto;
@@ -19,8 +13,11 @@ import pl.lodz.p.it.naspontanaapp.repository.ActivityRepository;
 import pl.lodz.p.it.naspontanaapp.repository.CategoryRepository;
 import pl.lodz.p.it.naspontanaapp.repository.UserRepository;
 import pl.lodz.p.it.naspontanaapp.utils.DateFormater;
-import pl.lodz.p.it.naspontanaapp.utils.DtoUtils;
 import pl.lodz.p.it.naspontanaapp.utils.TimeYodaUtils;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by 'Jakub Dziworski' on 30.11.16
@@ -47,18 +44,11 @@ public class ActivityCreationManagerImpl implements ActivityCreationManager {
 		if (user == null) {
 			user = createNewUser(activityInputDto.getFacebookId());
 		}
-
-		Activity activity = new Activity();
-		activity.setDescription(activityInputDto.getDescription());
-		activity.setName(activityInputDto.getName());
-		activity.setStartDate(DateFormater.convert(activityInputDto.getStartDate()));
-		activity.setPublicationDate(LocalDateTime.now());
-		activity.setCategory(category);
-		activity.setPublished(false);
-		activity.setOwner(user);
-
+		Activity activity = ActivityDtoConverter.toActivity(activityInputDto, category, user);
 		return activityRepository.save(activity).getId();
 	}
+
+
 
 	private User createNewUser(String facebookId) {
 		User user = new User();
@@ -79,7 +69,7 @@ public class ActivityCreationManagerImpl implements ActivityCreationManager {
 		List<String> friendsIds = Arrays.asList(inputDTO.getFriends());
 		return activityListingManager.getActivities(friendsIds).stream()
 				.filter(a -> areSimilarActivities(inputDTO, a))
-				.map(DtoUtils::fromActivity)
+				.map(ActivityDtoConverter::toDto)
 				.collect(Collectors.toList());
 	}
 

@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import pl.lodz.p.it.naspontanaapp.converting.ActivityDtoConverter;
 import pl.lodz.p.it.naspontanaapp.domain.ActivityOutputDto;
 import pl.lodz.p.it.naspontanaapp.entities.Activity;
 import pl.lodz.p.it.naspontanaapp.service.ActivityDetailsManager;
-import pl.lodz.p.it.naspontanaapp.utils.DtoUtils;
 
 /**
  * Created by 'Jakub Dziworski' on 30.11.16
@@ -28,7 +28,7 @@ public class ActivityDetailsController {
     public ActivityOutputDto activityDetails(@PathVariable long activityId) {
         logger.info("activityDetails - START {}", activityId);
         Activity activity = activityDetailsManager.getActivity(activityId);
-        ActivityOutputDto fromActivity = DtoUtils.fromActivity(activity);
+        ActivityOutputDto fromActivity = ActivityDtoConverter.toDto(activity);
         logger.info("activityDetails - STOP {}", fromActivity);
         return fromActivity;
     }
