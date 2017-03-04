@@ -25,11 +25,12 @@ public class ActivityListingManagerImpl implements ActivityListingManager{
 
 	public List<Activity> getActivities(List<String> friendsIds) {
 		List<Activity> allActivities = activityRepository.findAll();
-		return allActivities.stream().filter(a -> activityBelongsToOneOfFriend(a, friendsIds))
+		return allActivities.stream()
+				.filter(a -> activityOwnedByAnyFriend(a, friendsIds))
 				.collect(Collectors.toList());
 	}
 
-	private boolean activityBelongsToOneOfFriend(Activity activity, List<String> friendsIds) {
+	private boolean activityOwnedByAnyFriend(Activity activity, List<String> friendsIds) {
 		String ownerFbId = activity.getOwner().getFacebookId();
 		return friendsIds.contains(ownerFbId);
 	}

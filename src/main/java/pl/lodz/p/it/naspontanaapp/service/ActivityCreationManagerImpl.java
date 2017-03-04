@@ -53,7 +53,6 @@ public class ActivityCreationManagerImpl implements ActivityCreationManager {
 		activity.setPublicationDate(LocalDateTime.now());
 		activity.setCategory(category);
 		activity.setPublished(false);
-		// przypisanie aktywnosci wlascicielowi
 		activity.setOwner(user);
 
 		return activityRepository.save(activity).getId();
@@ -77,12 +76,10 @@ public class ActivityCreationManagerImpl implements ActivityCreationManager {
 
 	public List<ActivityOutputDto> findSimilarActivities(SimilarActivityInputDto inputDTO) {
 		List<String> friendsIds = Arrays.asList(inputDTO.getFriends());
-		List<Activity> friendsActivities = activityListingManager.getActivities(friendsIds);
-
-		List<Activity> filteredActivities = friendsActivities.stream().filter(a -> areSimilarActivities(inputDTO, a))
+		return activityListingManager.getActivities(friendsIds).stream()
+				.filter(a -> areSimilarActivities(inputDTO, a))
+				.map(DtoUtils::fromActivity)
 				.collect(Collectors.toList());
-
-		return filteredActivities.stream().map(DtoUtils::fromActivity).collect(Collectors.toList());
 	}
 
 	private boolean areSimilarActivities(SimilarActivityInputDto similarActivityInputDto, Activity activity) {
