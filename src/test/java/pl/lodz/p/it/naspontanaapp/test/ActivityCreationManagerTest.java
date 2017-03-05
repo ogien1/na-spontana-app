@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
@@ -24,7 +25,7 @@ import pl.lodz.p.it.naspontanaapp.utils.DateFormater;
 @RunWith(MockitoJUnitRunner.class)
 public class ActivityCreationManagerTest {
 
-    private static final List<String> FACEBOOK_IDS = Arrays.asList("5872882191377338","5872882ddd191377338");
+    private static final List<String> FACEBOOK_IDS = Arrays.asList("5872882191377338", "5872882ddd191377338");
 
     private static final long CATEGORY_ID = 1;
 
@@ -77,24 +78,23 @@ public class ActivityCreationManagerTest {
     private SimilarActivityInputDto createSimilarActivityInputDto(String startDate, long categoryId, long minutesDiff,
                                                                   String[] facebookIds) {
         return SimilarActivityInputDto.builder()
-            .startDate(startDate)
-            .categoryId(categoryId)
-            .minutesDiff(minutesDiff)
-            .friends(facebookIds)
-            .build();
+                .startDate(startDate)
+                .categoryId(categoryId)
+                .minutesDiff(minutesDiff)
+                .friends(facebookIds)
+                .build();
     }
 
     private Activity createActivity(String startDate, long categoryId) {
-        Category category = new Category();
-        category.setId(categoryId);
+        Category category = Category.builder().id(categoryId).build();
 
-        Activity activity = new Activity();
-        activity.setStartDate(DateFormater.convert(startDate));
-        activity.setCategory(category);
-        activity.setId(0L);
-        activity.setOwner(new User());
-
-        return activity;
+        return Activity.builder()
+                .startDate(DateFormater.convert(startDate))
+                .category(category)
+                .id(0L)
+                .users(Collections.emptyList())
+                .owner(User.builder().build())
+                .build();
     }
 
 }

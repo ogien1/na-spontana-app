@@ -1,6 +1,6 @@
 package pl.lodz.p.it.naspontanaapp.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,7 +19,11 @@ import javax.persistence.Table;
  * The persistent class for the category database table.
  * 
  */
-@Data
+@Builder
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 @Entity
 @Table(name="category")
 @NamedQuery(name="Category.findAll", query="SELECT c FROM Category c")

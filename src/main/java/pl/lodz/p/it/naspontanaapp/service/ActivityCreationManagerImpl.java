@@ -51,10 +51,11 @@ public class ActivityCreationManagerImpl implements ActivityCreationManager {
 
 
 	private User createNewUser(String facebookId) {
-		User user = new User();
-		user.setName("");
-		user.setLastname("");
-		user.setFacebookId(facebookId);
+		User user = User.builder()
+				.name("")
+				.lastname("")
+				.facebookId(facebookId)
+				.build();
 		return userRepository.save(user);
 	}
 

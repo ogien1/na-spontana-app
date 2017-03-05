@@ -1,6 +1,6 @@
 package pl.lodz.p.it.naspontanaapp.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,7 +24,11 @@ import javax.persistence.Table;
 /**
  * The persistent class for the user database table.
  */
-@Data
+@Builder
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 @Entity
 @Table(name = "user")
 @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
