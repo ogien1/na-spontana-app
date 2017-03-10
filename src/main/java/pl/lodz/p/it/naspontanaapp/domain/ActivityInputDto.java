@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
 
 /**
- * Created by piotr on 30.11.16.
+ * Dane aktywności podawane przez użytkownika
  */
 @Builder
 @AllArgsConstructor
@@ -14,14 +14,29 @@ import javax.ws.rs.GET;
 @ToString
 public class ActivityInputDto implements BaseActivityInputDto{
 
+	/**
+	 * Data startowa aktywności
+	 */
 	private String startDate;
 
+	/**
+	 * Typ aktywności
+	 */
 	private long categoryId;
 
+	/**
+	 * Opis aktywności
+	 */
 	private String description;
 
+	/**
+	 * Nazwa aktywności
+	 */
 	private String name;
-	
+
+	/**
+	 * Identyfikator facebook użytkownika
+	 */
 	@NotNull
 	private String facebookId;
 }

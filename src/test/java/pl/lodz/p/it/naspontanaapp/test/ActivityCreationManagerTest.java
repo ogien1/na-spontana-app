@@ -22,6 +22,9 @@ import pl.lodz.p.it.naspontanaapp.service.ActivityCreationManagerImpl;
 import pl.lodz.p.it.naspontanaapp.service.ActivityListingManagerImpl;
 import pl.lodz.p.it.naspontanaapp.utils.DateFormater;
 
+/**
+ * Testuje wyszukiwanie podobnych aktywności
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class ActivityCreationManagerTest {
 

@@ -23,8 +23,7 @@ import org.joda.time.LocalDateTime;
 
 
 /**
- * The persistent class for the activity database table.
- *
+ * Encja zawierająca dane aktywności
  */
 @Builder
 @EqualsAndHashCode
@@ -37,37 +36,62 @@ import org.joda.time.LocalDateTime;
 public class Activity implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Identyfikator
+     */
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(unique=true, nullable=false)
     private Long id;
 
+    /**
+     * Opisa aktywności
+     */
     @Column(nullable=false, length=100)
     private String description;
 
+    /**
+     * Nazwa aktywności
+     */
     @Column(nullable=false, length=50)
     private String name;
 
+    /**
+     * Data publikacji
+     */
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     @Column(name="publication_date", nullable=false)
     private LocalDateTime publicationDate;
 
+    /**
+     * Czy aktywność została już opublikowana
+     */
     private Boolean published;
 
+    /**
+     * Data początkowa
+     */
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     @Column(name="start_date", nullable=false)
     private LocalDateTime startDate;
 
-    //bi-directional many-to-one association to Category
+    /**
+     * Identyfikator kategorii
+     */
     @ManyToOne
     @JoinColumn(name="category_id", nullable=false)
     private Category category;
 
+    /**
+     * Właściciel aktywności
+     */
     @ManyToOne
     @JoinColumn(name="owner_id", nullable=false)
     private User owner;
 
-    //bi-directional many-to-many association to User
+    /**
+     * Lista uczestników aktywności
+     */
     @ManyToMany(mappedBy="activities", cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
 

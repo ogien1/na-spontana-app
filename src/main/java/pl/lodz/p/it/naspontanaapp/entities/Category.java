@@ -16,8 +16,7 @@ import javax.persistence.Table;
 
 
 /**
- * The persistent class for the category database table.
- * 
+ * Encja zawierająca dane kategorii aktywności
  */
 @Builder
 @EqualsAndHashCode
@@ -30,18 +29,29 @@ import javax.persistence.Table;
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Identyfikator
+	 */
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
 	private Long id;
 
+	/**
+	 * Nazwa kategorii
+	 */
 	@Column(nullable=false, length=50)
 	private String name;
 
+	/**
+	 * Czynność jaką można wykonywać w ramach aktywności
+	 */
 	@Column(nullable=false, length=50)
 	private String verb;
 
-	//bi-directional many-to-one association to ActivityInputDto
+	/**
+	 * Lista aktywności zawierająca kategorię
+	 */
 	@OneToMany(mappedBy="category")
 	private List<Activity> activities;
 }

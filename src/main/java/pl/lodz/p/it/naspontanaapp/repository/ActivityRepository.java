@@ -7,9 +7,17 @@ import org.springframework.stereotype.Repository;
 
 import pl.lodz.p.it.naspontanaapp.entities.Activity;
 
+/**
+ * Repozytorium aktywności
+ */
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Long>  {
 
+	/**
+	 * Pobiera wszystkie aktywności dla podanego identyfikatora facebook
+	 * @param facebookId
+	 * @return
+	 */
 	List<Activity> findActivityByOwner_facebookId(String facebookId);
 
 }

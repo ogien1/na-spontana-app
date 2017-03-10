@@ -14,8 +14,8 @@ import pl.lodz.p.it.naspontanaapp.entities.Activity;
 import pl.lodz.p.it.naspontanaapp.service.ActivityDetailsManager;
 
 /**
- * Created by 'Jakub Dziworski' on 30.11.16
-// */
+ * Endpoint aktywności
+ */
 @RestController
 public class ActivityDetailsController {
 	
@@ -24,6 +24,11 @@ public class ActivityDetailsController {
     @Autowired
     private ActivityDetailsManager activityDetailsManager;
 
+    /**
+     * Zwraca szczegóły aktywności
+     * @param activityId
+     * @return
+     */
     @RequestMapping(value = "/activity/details/{activityId}",method = RequestMethod.GET)
     public ActivityOutputDto activityDetails(@PathVariable long activityId) {
         logger.info("activityDetails - START {}", activityId);

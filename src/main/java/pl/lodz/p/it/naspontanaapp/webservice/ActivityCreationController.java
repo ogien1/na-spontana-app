@@ -19,7 +19,7 @@ import pl.lodz.p.it.naspontanaapp.domain.SimilarActivityInputDto;
 import pl.lodz.p.it.naspontanaapp.service.ActivityCreationManager;
 
 /**
- * Created by 'Jakub Dziworski' on 30.11.16
+ * Endpoint aktywności
  */
 @Transactional
 @RestController
@@ -31,6 +31,11 @@ public class ActivityCreationController {
 	@Autowired
 	ActivityCreationManager activityCreationManager;
 
+	/**
+	 * Umożliwia dodanie aktywności
+	 * @param activityInputDto
+	 * @return
+	 */
 	@RequestMapping(value = "/addActivity", method = RequestMethod.POST)
 	public Long addActivity(@RequestBody ActivityInputDto activityInputDto) {
 		logger.info("addActivity - START {}", activityInputDto);
@@ -39,6 +44,11 @@ public class ActivityCreationController {
 		return activityId;
 	}
 
+	/**
+	 * Umożliwia dodanie użytkownika do aktywności
+	 * @param facebookId
+	 * @param activityId
+	 */
 	@RequestMapping(value = "/addUserToActivity", method = RequestMethod.POST)
 	public void addUserToActivity(@RequestParam("facebookId") String facebookId, @RequestParam("activityId") long activityId) {
 		logger.info("addUserToActivity - START {} {}", facebookId, activityId);
@@ -46,6 +56,11 @@ public class ActivityCreationController {
 		logger.info("addUserToActivity - END");
 	}
 
+	/**
+	 * Umożliwia dodanie podobnych aktywności
+	 * @param similarActivityInputDto
+	 * @return
+	 */
 	@RequestMapping(value = "/addSimilarActivity", method = RequestMethod.POST)
 	public List<ActivityOutputDto> addSimilarActivity(@RequestBody SimilarActivityInputDto similarActivityInputDto) {
 		logger.info("similarActivities - START {} {}", similarActivityInputDto);

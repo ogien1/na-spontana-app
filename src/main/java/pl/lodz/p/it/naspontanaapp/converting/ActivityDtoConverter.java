@@ -13,9 +13,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by jdziworski on 04.03.17.
+ * Klasa konwertująca encje do obiektu DTO
  */
 public class ActivityDtoConverter {
+
+    /**
+     * Konwertuje encję do obiektu DTO
+     * @param activity
+     * @return
+     */
     public static ActivityOutputDto toDto(Activity activity) {
         List<String> usersIds = activity.getUsers().stream()
                 .map(u -> u.getFacebookId()).collect(Collectors.toList());
@@ -30,6 +36,13 @@ public class ActivityDtoConverter {
                 .build();
     }
 
+    /**
+     * Konwertuje obiekt DTO do encji
+     * @param activityInputDto
+     * @param category
+     * @param owner
+     * @return
+     */
     public static Activity toActivity(BaseActivityInputDto activityInputDto, Category category, User owner) {
         return Activity.builder()
                 .description(activityInputDto.getDescription())

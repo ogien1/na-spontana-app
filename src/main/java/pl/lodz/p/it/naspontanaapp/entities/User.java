@@ -22,7 +22,7 @@ import javax.persistence.Table;
 
 
 /**
- * The persistent class for the user database table.
+ * Encja zawierająca dane użytkownika
  */
 @Builder
 @EqualsAndHashCode
@@ -35,24 +35,41 @@ import javax.persistence.Table;
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Identyfikator
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true, nullable = false)
     private Long id;
 
+    /**
+     * Identyfikator facebook użytkownika
+     */
     @Column(name = "facebook_id", nullable = false, length = 256)
     private String facebookId;
 
+    /**
+     * Nazwisko użytkownika
+     */
     @Column(nullable = false, length = 50)
     private String lastname;
 
+    /**
+     * Imię użytkownika
+     */
     @Column(nullable = false, length = 50)
     private String name;
-    
-	@OneToMany(mappedBy="owner")
+
+    /**
+     * Lista aktywności, których użytkownik jest właścicielem
+     */
+    @OneToMany(mappedBy="owner")
 	private List<Activity> ownerActivities = new ArrayList<>();
 
-    //bi-directional many-to-many association to ActivityInputDto
+    /**
+     * Aktywności, do których jest przypisany użytkownik
+     */
     @ManyToMany
     @JoinTable(
             name = "user_activity"

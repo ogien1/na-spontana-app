@@ -7,6 +7,9 @@ import org.junit.Test;
 
 import pl.lodz.p.it.naspontanaapp.utils.TimeYodaUtils;
 
+/***
+ * Testuje logikę obliczająca różnice w czasie
+ */
 public class TimeYodaUtilsTest {
 
 	private final static String START_DATE = "2016-12-10T20:32:15";
