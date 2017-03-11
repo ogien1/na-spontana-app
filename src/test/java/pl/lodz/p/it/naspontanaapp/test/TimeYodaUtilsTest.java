@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
+import org.junit.experimental.categories.Category;
 import pl.lodz.p.it.naspontanaapp.utils.TimeYodaUtils;
 
 /***
@@ -21,6 +22,7 @@ public class TimeYodaUtilsTest {
 	private final static long END_DATE_START_DATE_SECONDS_DIFF = 1185;
 
 	@Test
+	@Category(pl.lodz.p.it.naspontanaapp.test.FastTests.class)
 	public void testGetMinutes() {
 		LocalDateTime start = new LocalDateTime(START_DATE);
 		LocalDateTime end = new LocalDateTime(END_DATE);
@@ -33,6 +35,7 @@ public class TimeYodaUtilsTest {
 	}
 
 	@Test
+	@Category(pl.lodz.p.it.naspontanaapp.test.FastTests.class)
 	public void testSeconds() {
 		LocalDateTime start = new LocalDateTime(START_DATE);
 		LocalDateTime end = new LocalDateTime(END_DATE);
