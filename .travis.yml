@@ -9,3 +9,6 @@ services:
 before_script:
   - psql -c "CREATE USER spontanu_test WITH PASSWORD 'spontanp_test';" -U postgres
   - psql -c 'CREATE DATABASE spontandb_test OWNER spontanu_test;' -U postgres
+  
+after_success:
+  - bash <(curl -s https://copilot.blackducksoftware.com/ci/travis/scripts/upload)
